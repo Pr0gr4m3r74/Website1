@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mini‑Game</title>
-<link rel="stylesheet" href="style.css" />
+padding: 10px;
+font-size: 12px;
+}
+.common { background: #6b7280; }
+.rare { background: #2563eb; }
+.epic { background: #7c3aed; }
+.legendary { background: #ca8a04; }
+.mythic { background: #dc2626; box-shadow: 0 0 15px red; }
+</style>
 </head>
 <body>
 <header>
-<h1>Mini‑Game</h1>
+<h1>Karten ziehen</h1>
 <nav>
 <a href="index.html">Start</a>
 <a href="minigame.html">Mini‑Game</a>
@@ -18,20 +21,81 @@
 </header>
 
 
-<main>
-<p>Klicke den Button so oft du kannst:</p>
-<h2 id="score">0</h2>
-<button onclick="increment()">Klick mich</button>
+<main class="game-area">
+<button onclick="drawCard()">Karte ziehen</button>
+
+
+<div id="currentCard"></div>
+
+
+<h2>Inventar</h2>
+<div id="inventory" class="inventory"></div>
 </main>
 
 
 <footer>© 2026 IT Solutions</footer>
+
+
 <script>
-let count = 0;
-function increment() {
-count++;
-document.getElementById('score').innerText = count;
+const rarities = [
+{ name: 'Gewöhnlich', chance: 70, class: 'common', icons: ['🪨','🪵','🌿','🏖️','🍃','🪵'] },
+{ name: 'Selten', chance: 20, class: 'rare', icons: ['🔩','🟠','🪵'] },
+{ name: 'Episch', chance: 8, class: 'epic', icons: ['🥇','🥈','⚪'] },
+{ name: 'Legendär', chance: 1.99, class: 'legendary', icons: ['⚔️','🗡️','🏹'] },
+{ name: 'Mythisch', chance: 0.01, class: 'mythic', icons: ['⚫','⚪'] }
+];
+
+
+let inventory = [];
+
+
+function drawRarity() {
+let roll = Math.random() * 100;
+let sum = 0;
+for (let r of rarities) {
+sum += r.chance;
+if (roll <= sum) return r;
+}
+}
+
+
+function drawCard() {
+const rarity = drawRarity();
+const icon = rarity.icons[Math.floor(Math.random() * rarity.icons.length)];
+const quality = Math.floor(Math.random() * 10) + 1;
+
+
+const card = { rarity: rarity.name, class: rarity.class, icon, quality };
+inventory.push(card);
+
+
+showCurrentCard(card);
+renderInventory();
+}
+
+
+function showCurrentCard(card) {
+const div = document.getElementById('currentCard');
+div.innerHTML = `
+<div class="card ${card.class}">
+<div>${card.rarity}</div>
+<div class="icon">${card.icon}</div>
+<div>Qualität: ${card.quality}</div>
+</div>`;
+}
+
+
+function renderInventory() {
+const inv = document.getElementById('inventory');
+inv.innerHTML = '';
+inventory.forEach(c => {
+const d = document.createElement('div');
+d.className = `small-card ${c.class}`;
+d.innerHTML = `${c.icon}<br>${c.rarity}<br>Q:${c.quality}`;
+inv.appendChild(d);
+});
 }
 </script>
 </body>
 </html>
+
