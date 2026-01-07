@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mini‑Game</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+<h1>Mini‑Game</h1>
+<nav>
+<a href="index.html">Start</a>
+<a href="minigame.html">Mini‑Game</a>
+<a href="kontakt.html">Kontakt</a>
+<a href="impressum.html">Impressum</a>
+</nav>
+</header>
+
+
+<main>
+<p>Klicke den Button so oft du kannst:</p>
+<h2 id="score">0</h2>
+<button onclick="increment()">Klick mich</button>
+</main>
+
+
+<footer>© 2026 IT Solutions</footer>
+<script>
+let count = 0;
+function increment() {
+count++;
+document.getElementById('score').innerText = count;
+}
+</script>
+</body>
+</html>
