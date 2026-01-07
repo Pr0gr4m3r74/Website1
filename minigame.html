@@ -5,7 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Karten-Mini-Game</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="minigame.css" />
+  <style>
+    /* ===== Spielbereich ===== */
+    .game-area { text-align: center; margin-left: 240px; }
+
+    /* Große Karte */
+    .card {
+      width: 180px;
+      height: 280px;
+      border-radius: 16px;
+      padding: 12px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      overflow: hidden;
+      border: 4px solid transparent;
+      transition: transform 0.2s ease;
+    }
+    .icon { font-size: 64px; margin: 12px 0; }
+    .stars { margin-top: 4px; }
+
+    /* Inventar */
+    .inventory {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 30px;
+    }
+    .small-card {
+      border-radius: 12px;
+      padding: 8px;
+      font-size: 12px;
+      text-align: center;
+      height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      overflow: hidden;
+      border: 3px solid transparent;
+    }
+
+    /* Seltenheit Farben & Verzierung */
+    .common { background: linear-gradient(135deg, #6b7280, #4b5563, #9ca3af); border-image: linear-gradient(45deg, #a3e635, #22d3ee) 1; border-radius: 16px; }
+    .rare { background: linear-gradient(135deg, #2563eb, #1e40af, #3b82f6); border-image: linear-gradient(45deg, #60a5fa, #3b82f6) 1; box-shadow: 0 0 12px #3b82f6 inset; }
+    .epic { background: linear-gradient(135deg, #7c3aed, #5b21b6, #c084fc); border-image: linear-gradient(45deg, #d8b4fe, #a78bfa) 1; box-shadow: 0 0 15px #c084fc inset; }
+    .legendary { background: linear-gradient(135deg, #f59e0b, #b45309, #fbbf24); border-image: linear-gradient(45deg, #fde68a, #f97316) 1; box-shadow: 0 0 18px #f59e0b inset; }
+    .mythic { background: linear-gradient(135deg, #dc2626, #7f1d1d, #f87171); border-image: linear-gradient(45deg, #fca5a5, #b91c1c) 1; box-shadow: 0 0 25px #dc2626 inset, 0 0 15px #f87171; }
+
+    /* Hover Effekt */
+    .card:hover, .small-card:hover { transform: translateY(-6px) scale(1.03); transition: transform 0.2s ease; }
+
+    /* ===== Altar ===== */
+    #altar {
+      position: fixed;
+      left: 20px;
+      top: 100px;
+      width: 200px;
+      background: #1e293b;
+      padding: 12px;
+      border-radius: 12px;
+      color: #fff;
+    }
+    .altar-slot {
+      height: 60px;
+      margin-bottom: 8px;
+      border: 2px dashed #94a3b8;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -18,11 +92,22 @@
   </nav>
 </header>
 
+<!-- Altar links -->
+<div id="altar">
+  <h3>Altar</h3>
+  <p>Ziehe 3 Karten gleichen Typs hier, um eine höhere Seltenheit zu erhalten</p>
+  <div id="altar-slots">
+    <div class="altar-slot" data-index="0"></div>
+    <div class="altar-slot" data-index="1"></div>
+    <div class="altar-slot" data-index="2"></div>
+  </div>
+  <button onclick="summonFromAltar()">Opfern & Belohnung</button>
+  <div id="altar-result"></div>
+</div>
+
 <main class="game-area">
   <button onclick="drawCard()">Karte ziehen</button>
-
   <div id="currentCard"></div>
-
   <h2>Inventar</h2>
   <div id="inventory" class="inventory"></div>
 </main>
@@ -63,6 +148,7 @@ const allCards = [
 ];
 
 let inventory = [];
+let altarSlots = [null, null, null];
 
 function weightedRandom() {
   let roll = Math.random() * 100;
@@ -77,28 +163,21 @@ function drawCard() {
   let rarity = weightedRandom();
   let cardsOfRarity = allCards.filter(c => c.rarity === rarity);
   let card = {...cardsOfRarity[Math.floor(Math.random() * cardsOfRarity.length)]};
-
   let qRoll = Math.random() * 100;
   if (qRoll <= 50) card.quality = 1 + Math.floor(Math.random() * 2);
   else if (qRoll <= 80) card.quality = 3;
   else if (qRoll <= 95) card.quality = 4;
   else card.quality = 5;
-
   inventory.push(card);
   showCurrentCard(card);
   renderInventory();
+  makeDraggable();
 }
 
 function showCurrentCard(card) {
   const div = document.getElementById('currentCard');
   let stars = '✦'.repeat(card.quality);
-  div.innerHTML = `
-    <div class="card ${card.rarity.toLowerCase()}">
-      <div class="rarity">${card.rarity}</div>
-      <div class="name">${card.name}</div>
-      <div class="icon">${card.icon}</div>
-      <div class="stars">${stars}</div>
-    </div>`;
+  div.innerHTML = `<div class="card ${card.rarity.toLowerCase()}"><div class="rarity">${card.rarity}</div><div class="name">${card.name}</div><div class="icon">${card.icon}</div><div class="stars">${stars}</div></div>`;
 }
 
 function renderInventory() {
@@ -112,8 +191,66 @@ function renderInventory() {
     inv.appendChild(d);
   });
 }
+
+function makeDraggable() {
+  const cards = document.querySelectorAll('.small-card');
+  cards.forEach(card => {
+    card.setAttribute('draggable', true);
+    card.ondragstart = e => {
+      e.dataTransfer.setData('text/plain', inventory.indexOf(getCardFromElement(card)));
+      card.classList.add('dragging');
+    };
+    card.ondragend = e => { card.classList.remove('dragging'); };
+  });
+  const inv = document.getElementById('inventory');
+  inv.ondragover = e => {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(inv, e.clientY);
+    const dragging = document.querySelector('.dragging');
+    if (afterElement == null) inv.appendChild(dragging);
+    else inv.insertBefore(dragging, afterElement);
+  };
+}
+
+function getCardFromElement(el) {
+  const index = Array.from(document.getElementById('inventory').children).indexOf(el);
+  return inventory[index];
+}
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.small-card:not(.dragging)')];
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
+    else return closest;
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+function renderAltar() {
+  const slots = document.querySelectorAll('.altar-slot');
+  for (let i = 0; i < 3; i++) {
+    if (altarSlots[i]) slots[i].textContent = altarSlots[i].name + ' (' + altarSlots[i].rarity + ')';
+    else slots[i].textContent = '';
+  }
+}
+
+function summonFromAltar() {
+  if (altarSlots.some(s => !s)) { alert('Alle 3 Slots müssen gefüllt sein!'); return; }
+  const type = altarSlots[0].rarity;
+  if (!altarSlots.every(c => c.rarity === type)) { alert('Alle 3 Karten müssen dieselbe Seltenheit haben!'); return; }
+  const raritiesOrder = ['Gewöhnlich','Selten','Episch','Legendär','Mythisch'];
+  let currentIndex = raritiesOrder.indexOf(type);
+  if (currentIndex === raritiesOrder.length - 1) { alert('Maximale Seltenheit erreicht!'); return; }
+  const higherRarity = raritiesOrder[currentIndex + 1];
+  const possibleCards = allCards.filter(c => c.rarity === higherRarity);
+  const reward = {...possibleCards[Math.floor(Math.random() * possibleCards.length)]};
+  inventory.push(reward);
+  altarSlots = [null, null, null];
+  renderInventory(); renderAltar();
+  document.getElementById('altar-result').textContent = 'Du erhältst: ' + reward.name + ' (' + reward.rarity + ')';
+}
 </script>
 
 </body>
 </html>
-
