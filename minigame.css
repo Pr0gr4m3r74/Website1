@@ -1,0 +1,47 @@
+/* ===== Karten-Ziehbereich ===== */
+.game-area {
+  text-align: center;
+}
+
+/* ===== Große gezogene Karte ===== */
+.card {
+  width: 160px;
+  height: 220px;
+  border-radius: 14px;
+  padding: 12px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.icon {
+  font-size: 64px;
+}
+
+/* ===== Inventar ===== */
+.inventory {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 🔥 5 Karten pro Reihe */
+  gap: 14px;                             /* 🔥 Abstand zwischen Karten */
+  margin-top: 30px;
+}
+
+/* ===== Kleine Karten ===== */
+.small-card {
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ===== Seltenheitsfarben ===== */
+.common { background: #6b7280; }
+.rare { background: #2563eb; }
+.epic { background: #7c3aed; }
+.legendary { background: #ca8a04; }
+.mythic {
+  background: #dc2626;
+  box-shadow: 0 0 15px red;
+}
