@@ -1,47 +1,52 @@
-/* ===== Karten-Ziehbereich ===== */
-.game-area {
-  text-align: center;
-}
-
-/* ===== Große gezogene Karte ===== */
+/* Große Karte */
 .card {
-  width: 160px;
-  height: 220px;
-  border-radius: 14px;
+  width: 180px;
+  height: 280px;
+  border-radius: 16px;
   padding: 12px;
   margin: 20px auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-weight: bold;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  border: 3px solid transparent;
+  background-size: cover;
+  position: relative;
 }
 
-.icon {
-  font-size: 64px;
-}
+/* Icon zentral */
+.icon { font-size: 64px; margin: 12px 0; }
+/* Sterne unten */
+.stars { margin-top: 4px; }
 
-/* ===== Inventar ===== */
+/* Inventar */
 .inventory {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 🔥 5 Karten pro Reihe */
-  gap: 14px;                             /* 🔥 Abstand zwischen Karten */
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
   margin-top: 30px;
 }
-
-/* ===== Kleine Karten ===== */
 .small-card {
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 12px;
+  padding: 8px;
   font-size: 12px;
   text-align: center;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* ===== Seltenheitsfarben ===== */
-.common { background: #6b7280; }
-.rare { background: #2563eb; }
-.epic { background: #7c3aed; }
-.legendary { background: #ca8a04; }
-.mythic {
-  background: #dc2626;
-  box-shadow: 0 0 15px red;
-}
+/* Seltenheit Farben + Verzierung */
+.common { background: linear-gradient(to bottom, #6b7280, #4b5563); border: 2px solid #374151; }
+.rare { background: linear-gradient(to bottom, #2563eb, #1e40af); border: 2px solid #1e3a8a; }
+.epic { background: linear-gradient(to bottom, #7c3aed, #5b21b6); border: 3px solid #4c1d95; }
+.legendary { background: linear-gradient(to bottom, #f59e0b, #b45309); border: 3px solid #92400e; }
+.mythic { background: linear-gradient(to bottom, #dc2626, #7f1d1d); border: 3px solid #991b1b; box-shadow: 0 0 20px red; }
+
+/* Hover Effekt */
+.card:hover, .small-card:hover { transform: translateY(-4px); transition: 0.2s ease; }
