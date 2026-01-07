@@ -1,4 +1,4 @@
-/* Große Karte */
+/* ===== Große gezogene Karte ===== */
 .card {
   width: 180px;
   height: 280px;
@@ -11,15 +11,17 @@
   font-weight: bold;
   color: #fff;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  border: 3px solid transparent;
-  background-size: cover;
   position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  overflow: hidden;
+  border: 4px solid transparent;
+  transition: transform 0.2s ease;
 }
 
 /* Icon zentral */
 .icon { font-size: 64px; margin: 12px 0; }
-/* Sterne unten */
+
+/* Sterne für Qualität */
 .stars { margin-top: 4px; }
 
 /* Inventar */
@@ -38,15 +40,50 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  overflow: hidden;
+  border: 3px solid transparent;
 }
 
-/* Seltenheit Farben + Verzierung */
-.common { background: linear-gradient(to bottom, #6b7280, #4b5563); border: 2px solid #374151; }
-.rare { background: linear-gradient(to bottom, #2563eb, #1e40af); border: 2px solid #1e3a8a; }
-.epic { background: linear-gradient(to bottom, #7c3aed, #5b21b6); border: 3px solid #4c1d95; }
-.legendary { background: linear-gradient(to bottom, #f59e0b, #b45309); border: 3px solid #92400e; }
-.mythic { background: linear-gradient(to bottom, #dc2626, #7f1d1d); border: 3px solid #991b1b; box-shadow: 0 0 20px red; }
+/* ===== Seltenheit: wilde Farben & Verzierung ===== */
 
-/* Hover Effekt */
-.card:hover, .small-card:hover { transform: translateY(-4px); transition: 0.2s ease; }
+/* Gewöhnlich: Erde / Naturfarben, leicht glitzernd */
+.common {
+  background: linear-gradient(135deg, #6b7280, #4b5563, #9ca3af);
+  border-image: linear-gradient(45deg, #a3e635, #22d3ee) 1;
+  border-radius: 16px;
+}
+
+/* Selten: kräftige Blautöne mit Leuchteffekt */
+.rare {
+  background: linear-gradient(135deg, #2563eb, #1e40af, #3b82f6);
+  border-image: linear-gradient(45deg, #60a5fa, #3b82f6) 1;
+  box-shadow: 0 0 12px #3b82f6 inset;
+}
+
+/* Episch: violett / magisch */
+.epic {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6, #c084fc);
+  border-image: linear-gradient(45deg, #d8b4fe, #a78bfa) 1;
+  box-shadow: 0 0 15px #c084fc inset;
+}
+
+/* Legendär: Gold / orange / Feuer */
+.legendary {
+  background: linear-gradient(135deg, #f59e0b, #b45309, #fbbf24);
+  border-image: linear-gradient(45deg, #fde68a, #f97316) 1;
+  box-shadow: 0 0 18px #f59e0b inset;
+}
+
+/* Mythisch: Rot / Energie / extrem auffällig */
+.mythic {
+  background: linear-gradient(135deg, #dc2626, #7f1d1d, #f87171);
+  border-image: linear-gradient(45deg, #fca5a5, #b91c1c) 1;
+  box-shadow: 0 0 25px #dc2626 inset, 0 0 15px #f87171;
+}
+
+/* Hover Effekt für alle Karten */
+.card:hover, .small-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  transition: transform 0.2s ease;
+}
