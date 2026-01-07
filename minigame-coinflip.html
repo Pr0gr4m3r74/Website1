@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mini-Game — Münzwurf</title>
+<style>
+  :root{ --bg:#021022; --accent:#38bdf8; --panel:#0b2036; --muted:#94a3b8; }
+  body{ margin:0; font-family:Inter, Arial, sans-serif; background:linear-gradient(180deg,var(--bg),#03142a); color:#eaf6ff; min-height:100vh; display:flex; flex-direction:column; align-items:center; }
+  header{ width:100%; background:#010612; padding:12px 8px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,0.6); }
+  nav a{ margin:0 8px; color:var(--accent); text-decoration:none; font-weight:700; }
+  main{ margin:28px auto; width:100%; max-width:720px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); border-radius:12px; border:1px solid rgba(255,255,255,0.03); }
+  h1{ margin:0 0 12px 0; color:var(--accent); }
+  .panel{ display:flex; gap:18px; align-items:center; justify-content:center; flex-direction:column; padding:12px; }
+  .coin{ width:140px; height:140px; border-radius:50%; background:conic-gradient(#f8fafc, #dbeafe); display:flex; align-items:center; justify-content:center; font-size:56px; box-shadow: 0 8px 30px rgba(2,6,23,0.7); transition: transform .8s cubic-bezier(.2,.9,.2,1); }
+  .controls{ display:flex; gap:12px; margin-top:14px; }
+  button{ padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:800; background:linear-gradient(180deg,#06b6d4,#0ea5e9); color:#021023; }
+  .stats{ margin-top:14px; color:var(--muted); font-size:14px; text-align:center; }
+  footer{ margin-top:auto; width:100%; background:#010612; padding:12px; text-align:center; color:var(--muted); }
+  @media (max-width:520px){ .coin{ width:110px;height:110px;font-size:44px;} }
+</style>
+</head>
+<body>
+<header>
+  <h1>Münzwurf</h1>
+  <nav>
+    <a href="index.html">Start</a>
+    <a href="minigames.html">Mini-Games</a>
+    <a href="kontakt.html">Kontakt</a>
+    <a href="impressum.html">Impressum</a>
+  </nav>
+</header>
+
+<main>
+  <section class="panel" aria-live="polite">
+    <div id="coin" class="coin">⚪</div>
+
+    <div class="controls">
+      <button id="flipBtn">Münze werfen</button>
+      <button id="resetBtn" style="background:linear-gradient(180deg,#ef4444,#f97316);">Reset</button>
+    </div>
+
+    <div class="stats" id="stats">
+      Kopf: 0 &nbsp;|&nbsp; Zahl: 0 &nbsp;|&nbsp; Letztes: — &nbsp;|&nbsp; Serie: 0
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 IT Solutions</footer>
+
+<script>
+let heads = 0, tails = 0, last = null, streak = 0;
+const coinEl = document.getElementById('coin');
+const statsEl = document.getElementById('stats');
+const flipBtn = document.getElementById('flipBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+function updateStats(result){
+  if (last === result) streak++;
+  else { streak = 1; last = result; }
+  if (result === 'Kopf') heads++; else tails++;
+  statsEl.textContent = `Kopf: ${heads} | Zahl: ${tails} | Letztes: ${result} | Serie: ${streak}`;
+}
+
+function flipAnimation(result){
+  // einfache Dreh-Animation: change transform and symbol after half duration
+  coinEl.style.transition = 'transform 0.7s cubic-bezier(.2,.9,.2,1)';
+  coinEl.style.transform = 'rotateY(720deg) scale(1.03)';
+  // change symbol half way
+  setTimeout(()=> {
+    coinEl.textContent = (result === 'Kopf' ? '⚫' : '⚪');
+  }, 300);
+  setTimeout(()=> {
+    coinEl.style.transform = 'rotateY(0deg) scale(1)';
+  }, 800);
+}
+
+function flipCoin(){
+  flipBtn.disabled = true;
+  // Zufall: 50/50 (kann später pro Spiel angepasst werden)
+  const r = Math.random() < 0.5 ? 'Kopf' : 'Zahl';
+  flipAnimation(r);
+  setTimeout(()=> {
+    updateStats(r);
+    flipBtn.disabled = false;
+  }, 820);
+}
+
+function reset(){
+  heads = 0; tails = 0; last = null; streak = 0;
+  coinEl.textContent = '⚪';
+  statsEl.textContent = 'Kopf: 0 | Zahl: 0 | Letztes: — | Serie: 0';
+}
+
+flipBtn.addEventListener('click', flipCoin);
+resetBtn.addEventListener('click', reset);
+</script>
+</body>
+</html>
