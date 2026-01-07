@@ -7,17 +7,16 @@
 <link rel="stylesheet" href="minigame.css">
 <style>
 :root{
-  --bg:#071028;
-  --panel:#0f172a;
+  --bg:#031022;
+  --panel:#0b2036;
   --muted:#94a3b8;
   --accent:#38bdf8;
-  --glass: rgba(255,255,255,0.04);
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: Inter, Arial, sans-serif;
-  background: linear-gradient(180deg,#031022 0%, var(--bg) 100%);
+  background: linear-gradient(180deg,#021022 0%, var(--bg) 100%);
   color: #e5e7eb;
   min-height: 100vh;
   display:flex;
@@ -25,7 +24,7 @@ body {
 }
 header {
   background: #020617;
-  padding: 18px 12px;
+  padding: 16px 12px;
   text-align:center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
@@ -35,24 +34,24 @@ footer { background:#020617; text-align:center; padding:14px; font-size:14px; co
 .main-container {
   display:flex;
   justify-content:center;
-  gap:24px;
+  gap:32px;
   padding:28px;
-  align-items:flex-start;
+  align-items:center; /* Altar mittig vertikal zur Game-Area */
   width:100%;
-  max-width:1200px;
+  max-width:1280px;
   margin:0 auto;
 }
 
-/* ===== Altar (verziert) ===== */
+/* ===== Altar (verziert, größer) ===== */
 #altar {
-  width: 300px;
+  width: 380px; /* etwas größer */
   background:
-    radial-gradient(120px 80px at 50% 0%, rgba(255,255,255,0.03), transparent 20%),
-    linear-gradient(180deg,#081229 0%, #0b2036 40%, #081029 100%);
-  padding:18px;
-  border-radius:16px;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.7), inset 0 2px 10px rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.03);
+    radial-gradient(160px 100px at 50% 0%, rgba(255,255,255,0.03), transparent 16%),
+    linear-gradient(180deg,#07122a 0%, #0b2036 45%, #071224 100%);
+  padding:20px;
+  border-radius:18px;
+  box-shadow: 0 14px 40px rgba(2,6,23,0.75), inset 0 3px 14px rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
   position:relative;
   overflow:visible;
 }
@@ -61,26 +60,26 @@ footer { background:#020617; text-align:center; padding:14px; font-size:14px; co
   position:absolute;
   left:50%;
   transform:translateX(-50%);
-  top:-22px;
-  width:140px;
-  height:44px;
+  top:-26px;
+  width:180px;
+  height:48px;
   background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  border-radius:24px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-  filter: blur(0.6px);
-  opacity:0.9;
+  border-radius:26px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+  filter: blur(0.8px);
+  opacity:0.95;
 }
-#altar h3 { text-align:center; margin:0 0 10px 0; font-size:18px; letter-spacing:0.6px; }
+#altar h3 { text-align:center; margin:0 0 10px 0; font-size:19px; letter-spacing:0.6px; }
 #altar-slots {
   display:flex;
   justify-content:space-between;
-  gap:10px;
+  gap:12px;
   margin-top:8px;
 }
 .altar-slot {
-  width:86px;
-  height:140px;
-  border-radius:12px;
+  width:100px;
+  height:160px;
+  border-radius:14px;
   background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.12));
   border: 2px dashed rgba(145,158,171,0.12);
   display:flex;
@@ -89,158 +88,149 @@ footer { background:#020617; text-align:center; padding:14px; font-size:14px; co
   position:relative;
   transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s;
 }
-.altar-slot:after{
-  content:"";
-  position:absolute;
-  inset: -6px -6px auto -6px;
-  height:14px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));
-  border-radius: 12px 12px 0 0;
-  pointer-events:none;
-}
 .altar-slot.over {
   transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(56,189,248,0.06), 0 0 0 3px rgba(56,189,248,0.03) inset;
+  box-shadow: 0 18px 36px rgba(56,189,248,0.06), 0 0 0 4px rgba(56,189,248,0.03) inset;
   border-style:solid;
   border-color: rgba(56,189,248,0.25);
 }
 #altar button {
   width:100%;
-  margin-top:12px;
-  padding:12px;
-  border-radius:10px;
+  margin-top:14px;
+  padding:14px;
+  border-radius:12px;
   background: linear-gradient(180deg,#06b6d4,#0ea5e9);
   border:none;
   color:#021023;
-  font-weight:800;
-  font-size:16px;
+  font-weight:900;
+  font-size:17px;
   cursor:pointer;
-  box-shadow: 0 6px 18px rgba(10,20,40,0.5);
+  box-shadow: 0 8px 22px rgba(10,20,40,0.55);
 }
 #altar-result {
   text-align:center;
-  margin-top:12px;
+  margin-top:14px;
   color:var(--accent);
-  font-weight:700;
-  min-height:42px;
+  font-weight:800;
+  min-height:46px;
 }
 
 /* ===== Game area ===== */
 .game-area { flex:1; text-align:center; min-width:0; }
-.game-controls { display:flex; justify-content:center; gap:12px; align-items:center; }
+.game-controls { display:flex; justify-content:center; gap:16px; align-items:center; margin-bottom:6px; }
 .game-controls button {
-  padding:12px 16px;
-  border-radius:10px;
+  padding:14px 18px;
+  border-radius:12px;
   border:none;
   background: linear-gradient(180deg,#374151,#111827);
   color:#e5e7eb;
   cursor:pointer;
-  font-weight:800;
-  font-size:15px;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+  font-weight:900;
+  font-size:16px;
+  box-shadow: 0 8px 22px rgba(2,6,23,0.6);
 }
-#currentCard { margin: 16px auto; width:160px; }
+#currentCard { margin: 6px auto; width:180px; }
 
-/* ===== Inventory ===== */
+/* ===== Inventory (zentriert, symmetrisch) ===== */
 .inventory {
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap:14px;
+  grid-template-columns: repeat(auto-fit, 160px); /* feste Spaltenbreite -> symmetrisch */
+  justify-content:center; /* zentriert */
+  gap:18px;
   margin-top:18px;
   align-items:start;
-  justify-items:center;
-  padding-bottom:8px;
+  padding:10px;
   min-height:10px;
   border-radius:8px;
-  padding:6px;
 }
 
 /* ===== Karten & Verzierung ===== */
 .card, .small-card {
-  border-radius:12px;
-  padding:10px;
+  border-radius:14px;
+  padding:12px;
   color:#fff;
   text-align:center;
-  font-weight:700;
+  font-weight:800;
   position:relative;
-  box-shadow: 0 8px 20px rgba(2,6,23,0.6);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.7);
   transition: transform 0.16s ease, opacity 0.12s;
   user-select:none;
   overflow:visible;
 }
-.card { width:160px; height:220px; display:flex; flex-direction:column; justify-content:space-between; margin:0 auto; }
-.small-card { width:140px; height:160px; display:flex; flex-direction:column; justify-content:space-between; cursor:grab; overflow:visible; }
-.small-card.dragging { opacity:0.75; transform:scale(1.04); cursor:grabbing; z-index:40; }
+.card { width:180px; height:240px; display:flex; flex-direction:column; justify-content:space-between; margin:0 auto; }
+.small-card { width:160px; height:180px; display:flex; flex-direction:column; justify-content:space-between; cursor:grab; overflow:visible; touch-action: pan-y; }
+/* touch-action: pan-y erlaubt Scrollen bei Touch während Drag */
+.small-card.dragging { opacity:0.78; transform:scale(1.04); cursor:grabbing; z-index:60; }
 
 /* Ornament (sichtbar auf jeder Karte) */
 .small-card .ornament, .card .ornament {
   position:absolute;
-  left:8px;
-  top:8px;
-  width:32px;
-  height:32px;
-  border-radius:8px;
+  left:10px;
+  top:10px;
+  width:36px;
+  height:36px;
+  border-radius:9px;
   background: linear-gradient(45deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:14px;
-  opacity:0.95;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.03);
+  font-size:16px;
+  opacity:0.98;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.03);
 }
-/* Sterne rechts unten */
 .stars { margin-top:6px; font-size:14px; }
 
-/* Insert hint */
+/* Insert hint (wenn man in Inventar neu anordnet) */
 .small-card.insert-before {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 30px rgba(0,0,0,0.6);
+  transform: translateY(-8px);
+  box-shadow: 0 24px 40px rgba(0,0,0,0.65);
   outline: 2px dashed rgba(255,255,255,0.06);
 }
 
-/* ===== Rarity styles (bunter / "wild") ===== */
+/* ===== Rarity styles (bunter / wild + Ornamentfarben) ===== */
 .common {
-  background: linear-gradient(135deg,#6b7280,#4b5563);
+  background: linear-gradient(135deg,#6b7280,#4b5563 70%);
   border: 2px solid rgba(163,230,53,0.10);
 }
-.common .ornament { background: linear-gradient(135deg,#9ca3af,#6b7280); color:#061014; }
+.common .ornament { background: linear-gradient(135deg,#c7d2fe,#9ca3af); color:#081018; }
 
 .rare {
-  background: linear-gradient(135deg,#0ea5e9,#2563eb);
+  background: linear-gradient(135deg,#06b6d4,#2563eb 60%, #0ea5e9);
   border: 2px solid rgba(96,165,250,0.14);
 }
-.rare .ornament { background: linear-gradient(135deg,#7dd3fc,#0369a1); color:#021023; }
+.rare .ornament { background: linear-gradient(45deg,#7dd3fc,#0369a1); color:#021023; }
 
 .epic {
-  background: linear-gradient(135deg,#7c3aed,#c084fc 65%, #6d28d9);
-  border: 2px solid rgba(216,180,254,0.16);
+  background: linear-gradient(135deg,#7c3aed,#c084fc 60%, #6d28d9);
+  border: 2px solid rgba(216,180,254,0.18);
 }
 .epic .ornament { background: linear-gradient(45deg,#c084fc,#7c3aed); color:#0b0228; }
 
 .legendary {
-  background: linear-gradient(135deg,#f59e0b,#f97316 60%, #b45309);
-  border: 2px solid rgba(253,230,138,0.16);
+  background: linear-gradient(135deg,#f97316,#f59e0b 55%, #b45309);
+  border: 2px solid rgba(253,230,138,0.18);
 }
 .legendary .ornament { background: linear-gradient(45deg,#ffd27a,#ff8a00); color:#2a1200; }
 
 .mythic {
-  background: linear-gradient(135deg,#ff5f6d,#ffc371 40%, #7f1d1d);
-  border: 2px solid rgba(252,165,165,0.16);
+  background: linear-gradient(135deg,#ff5f6d,#ffc371 45%, #7f1d1d);
+  border: 2px solid rgba(252,165,165,0.18);
 }
 .mythic .ornament { background: linear-gradient(45deg,#ff8a8a,#ffcf93); color:#3a0a0a; }
 
-/* Altarkarten spezielle reduzierte Optik (passt sich an) */
-.altar-slot .small-card { width:100%; height:100%; box-shadow:none; border-radius:8px; padding:8px; }
+/* Altarkarten: reduzierte Optik passt sich an */
+.altar-slot .small-card { width:100%; height:100%; box-shadow:none; border-radius:10px; padding:10px; }
 
 /* kleine Feinheiten */
 .small-card .name, .card .name { font-size:13px; }
-.rarity { font-size:12px; opacity:0.9; margin-top:6px; }
+.rarity { font-size:12px; opacity:0.95; margin-top:6px; display:block; }
 
 /* Responsive */
-@media (max-width:800px){
+@media (max-width:900px){
   .main-container { flex-direction:column; align-items:center; padding:16px; }
-  #altar { width: 92%; }
-  .altar-slot { width: 28%; height:120px; }
+  #altar { width:92%; }
+  .altar-slot { width:32%; height:140px; }
+  .inventory { grid-template-columns: repeat(auto-fit, 140px); }
 }
 </style>
 </head>
@@ -391,9 +381,11 @@ function attachDraggables(){
   const cards = document.querySelectorAll('#inventory .small-card');
   cards.forEach(card => {
     card.addEventListener('dragstart', e => {
+      // set data
       e.dataTransfer.setData('text/plain', 'inv:' + card.dataset.index);
+      // hide default drag image to make drag less disruptive
+      try { e.dataTransfer.setDragImage(new Image(), 0, 0); } catch(e){}
       card.classList.add('dragging');
-      // allow move effect
       try { e.dataTransfer.effectAllowed = 'move'; } catch(e){}
     });
     card.addEventListener('dragend', e => { card.classList.remove('dragging'); });
@@ -445,6 +437,7 @@ function renderAltar(){
       d.innerHTML = `<div class="ornament">${c.icon}</div><div class="rarity">${c.rarity}</div><div class="name">${c.name}</div><div class="icon" style="font-size:36px">${c.icon}</div><div class="stars">${'✦'.repeat(c.quality)}</div>`;
       d.addEventListener('dragstart', e => {
         e.dataTransfer.setData('text/plain', 'altar:' + idx);
+        try { e.dataTransfer.setDragImage(new Image(), 0, 0); } catch(e){}
         d.classList.add('dragging');
         try{ e.dataTransfer.effectAllowed = 'move'; } catch(e){}
       });
@@ -490,7 +483,7 @@ altarSlotElements.forEach(slot => {
   });
 });
 
-/* Ziehen vom Altar zurück ins Inventar (auf leeren Bereich = ans Ende) */
+/* Ziehen vom Altar zurück ins Inventar (auf leeren Inventarbereich = ans Ende) */
 const inventoryEl = document.getElementById('inventory');
 inventoryEl.addEventListener('dragover', e => e.preventDefault());
 inventoryEl.addEventListener('drop', e => {
@@ -509,18 +502,47 @@ inventoryEl.addEventListener('drop', e => {
     // wenn auf freien Bereich fallen, ans Ende verschieben
     const src = Number(data.split(':')[1]);
     if (isNaN(src)) return;
-    moveInArray(inventory, src, inventory.length-1 >= 0 ? inventory.length-1 : 0);
+    moveInArray(inventory, src, Math.max(0, inventory.length-1));
     renderInventory();
   }
 });
 
-/* Opfer- / Belohnungslogik */
+/* Opfer- / Belohnungslogik
+   Neue deterministische Regeln:
+   - 3 Karten 'Selten' in den Altar -> immer 1 Episch
+   - 3 Karten 'Legendär' in den Altar -> immer 1 Mythisch
+   Priorität vor sonstiger Zufalls-/Bump-Logik.
+*/
 function summonFromAltar(){
   const filled = altarSlots.filter(s => s !== null);
   if (filled.length === 0){
     document.getElementById('altar-result').textContent = 'Leerer Altar — lege Karten hinein.';
     return;
   }
+
+  // prüfe deterministische Kombinationen (3 Selten => Episch ; 3 Legendär => Mythisch)
+  const counts = {};
+  altarSlots.forEach(s => { if (s) counts[s.rarity] = (counts[s.rarity]||0) + 1; });
+  // Priorität: 3 Legendär -> Mythisch
+  if ((counts['Legendär'] || 0) >= 3) {
+    const reward = pickRandomCardByRarity('Mythisch');
+    altarSlots = [null, null, null];
+    inventory.push(reward);
+    renderInventory();
+    document.getElementById('altar-result').innerHTML = `Opfer erfolgreich: 3 × Legendär → Belohnung: <strong>${reward.name}</strong> ${reward.icon} (Mythisch)`;
+    return;
+  }
+  // 3 Selten -> Episch
+  if ((counts['Selten'] || 0) >= 3) {
+    const reward = pickRandomCardByRarity('Episch');
+    altarSlots = [null, null, null];
+    inventory.push(reward);
+    renderInventory();
+    document.getElementById('altar-result').innerHTML = `Opfer erfolgreich: 3 × Selten → Belohnung: <strong>${reward.name}</strong> ${reward.icon} (Episch)`;
+    return;
+  }
+
+  // sonstige Logik wie vorher: highest rarity + chance auf bump basierend auf Qualität
   let maxIndex = 0;
   altarSlots.forEach(s => { if (!s) return; const idx = tiers.indexOf(s.rarity); if (idx > maxIndex) maxIndex = idx; });
   const totalQuality = filled.reduce((a,b)=>a+(b?b.quality:0),0);
@@ -530,7 +552,7 @@ function summonFromAltar(){
   altarSlots = [null, null, null];
   inventory.push(reward);
   renderInventory();
-  document.getElementById('altar-result').innerHTML = `Belohnung erhalten: <strong>${reward.name}</strong> <span style="font-size:20px">${reward.icon}</span> (${reward.rarity})`;
+  document.getElementById('altar-result').innerHTML = `Belohnung erhalten: <strong>${reward.name}</strong> ${reward.icon} (${reward.rarity})`;
 }
 
 /* Hook Buttons */
