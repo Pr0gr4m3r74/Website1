@@ -6,217 +6,242 @@
 <title>Karten-Mini-Game</title>
 <link rel="stylesheet" href="minigame.css">
 <style>
-/* ===== Layout ===== */
 :root{
-  --bg:#0f172a;
-  --panel:#1e293b;
+  --bg:#071028;
+  --panel:#0f172a;
   --muted:#94a3b8;
   --accent:#38bdf8;
+  --glass: rgba(255,255,255,0.04);
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: Inter, Arial, sans-serif;
-  background: linear-gradient(180deg,#071028 0%, var(--bg) 100%);
+  background: linear-gradient(180deg,#031022 0%, var(--bg) 100%);
   color: #e5e7eb;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display:flex;
+  flex-direction:column;
 }
 header {
   background: #020617;
   padding: 18px 12px;
-  text-align: center;
+  text-align:center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
-nav a {
-  margin: 0 12px;
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 600;
-}
-footer {
-  background: #020617;
-  text-align: center;
-  padding: 14px;
-  font-size: 14px;
-  color: var(--muted);
-  margin-top: auto;
-}
+nav a { margin: 0 12px; color: var(--accent); text-decoration:none; font-weight:600; }
+footer { background:#020617; text-align:center; padding:14px; font-size:14px; color:var(--muted); margin-top:auto; }
 
 .main-container {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  padding: 28px;
-  align-items: flex-start;
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  padding:28px;
+  align-items:flex-start;
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
 }
 
+/* ===== Altar (verziert) ===== */
 #altar {
-  width: 260px;
-  background: var(--panel);
-  padding: 16px;
-  border-radius: 12px;
-  margin-right: 0;
-  flex-shrink: 0;
+  width: 300px;
+  background:
+    radial-gradient(120px 80px at 50% 0%, rgba(255,255,255,0.03), transparent 20%),
+    linear-gradient(180deg,#081229 0%, #0b2036 40%, #081029 100%);
+  padding:18px;
+  border-radius:16px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.7), inset 0 2px 10px rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  position:relative;
+  overflow:visible;
 }
-#altar h3 {
-  text-align: center;
-  margin: 0 0 8px 0;
+#altar:before {
+  content: "";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  top:-22px;
+  width:140px;
+  height:44px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-radius:24px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  filter: blur(0.6px);
+  opacity:0.9;
 }
+#altar h3 { text-align:center; margin:0 0 10px 0; font-size:18px; letter-spacing:0.6px; }
 #altar-slots {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 10px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:8px;
 }
 .altar-slot {
-  width: 76px;
-  height: 120px;
-  border: 2px dashed #94a3b8;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #07102a;
-  color: #fff;
-  position: relative;
-  transition: background 0.15s, transform 0.12s;
+  width:86px;
+  height:140px;
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.12));
+  border: 2px dashed rgba(145,158,171,0.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s;
+}
+.altar-slot:after{
+  content:"";
+  position:absolute;
+  inset: -6px -6px auto -6px;
+  height:14px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));
+  border-radius: 12px 12px 0 0;
+  pointer-events:none;
 }
 .altar-slot.over {
-  background: rgba(56,189,248,0.06);
-  transform: translateY(-4px);
-  border-style: solid;
-  border-color: var(--accent);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(56,189,248,0.06), 0 0 0 3px rgba(56,189,248,0.03) inset;
+  border-style:solid;
+  border-color: rgba(56,189,248,0.25);
 }
 #altar button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 8px;
-  border-radius: 8px;
-  background: linear-gradient(180deg,#38bdf8,#0ea5e9);
-  border: none;
-  color: #021023;
-  font-weight: 700;
-  cursor: pointer;
+  width:100%;
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  background: linear-gradient(180deg,#06b6d4,#0ea5e9);
+  border:none;
+  color:#021023;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow: 0 6px 18px rgba(10,20,40,0.5);
 }
 #altar-result {
-  text-align: center;
-  margin-top: 10px;
-  color: var(--accent);
-  font-weight: bold;
-  min-height: 40px;
+  text-align:center;
+  margin-top:12px;
+  color:var(--accent);
+  font-weight:700;
+  min-height:42px;
 }
 
 /* ===== Game area ===== */
-.game-area {
-  flex: 1;
-  text-align: center;
-  min-width: 0;
-}
-.game-controls {
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  align-items:center;
-}
+.game-area { flex:1; text-align:center; min-width:0; }
+.game-controls { display:flex; justify-content:center; gap:12px; align-items:center; }
 .game-controls button {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  background: #111827;
-  color: #e5e7eb;
-  cursor: pointer;
-  font-weight: 600;
+  padding:12px 16px;
+  border-radius:10px;
+  border:none;
+  background: linear-gradient(180deg,#374151,#111827);
+  color:#e5e7eb;
+  cursor:pointer;
+  font-weight:800;
+  font-size:15px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
 }
-#currentCard {
-  margin: 16px auto;
-  width: 160px;
-}
+#currentCard { margin: 16px auto; width:160px; }
 
 /* ===== Inventory ===== */
 .inventory {
-  display: grid;
+  display:grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 14px;
-  margin-top: 20px;
-  align-items: start;
-  justify-items: center;
-  padding-bottom: 8px;
+  gap:14px;
+  margin-top:18px;
+  align-items:start;
+  justify-items:center;
+  padding-bottom:8px;
+  min-height:10px;
+  border-radius:8px;
+  padding:6px;
 }
 
-/* ===== Karten ===== */
+/* ===== Karten & Verzierung ===== */
 .card, .small-card {
-  border-radius: 12px;
-  padding: 10px;
-  color: #fff;
-  text-align: center;
-  font-weight: 700;
-  position: relative;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
-  transition: transform 0.18s ease, opacity 0.12s;
-  user-select: none;
+  border-radius:12px;
+  padding:10px;
+  color:#fff;
+  text-align:center;
+  font-weight:700;
+  position:relative;
+  box-shadow: 0 8px 20px rgba(2,6,23,0.6);
+  transition: transform 0.16s ease, opacity 0.12s;
+  user-select:none;
+  overflow:visible;
 }
-.card {
-  width: 160px;
-  height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 0 auto;
+.card { width:160px; height:220px; display:flex; flex-direction:column; justify-content:space-between; margin:0 auto; }
+.small-card { width:140px; height:160px; display:flex; flex-direction:column; justify-content:space-between; cursor:grab; overflow:visible; }
+.small-card.dragging { opacity:0.75; transform:scale(1.04); cursor:grabbing; z-index:40; }
+
+/* Ornament (sichtbar auf jeder Karte) */
+.small-card .ornament, .card .ornament {
+  position:absolute;
+  left:8px;
+  top:8px;
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  background: linear-gradient(45deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  opacity:0.95;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.03);
 }
-.small-card {
-  width: 140px;
-  height: 160px; /* schlanker als vorher */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: grab;
-  overflow: hidden;
-}
-.small-card.dragging {
-  opacity: 0.75;
-  transform: scale(1.06);
-  cursor: grabbing;
-}
-.icon {
-  font-size: 44px;
-  margin: 6px 0;
-}
-.stars {
-  margin-top: 6px;
-  font-size: 14px;
+/* Sterne rechts unten */
+.stars { margin-top:6px; font-size:14px; }
+
+/* Insert hint */
+.small-card.insert-before {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px rgba(0,0,0,0.6);
+  outline: 2px dashed rgba(255,255,255,0.06);
 }
 
-/* ===== Seltenheit (klassen) ===== */
+/* ===== Rarity styles (bunter / "wild") ===== */
 .common {
   background: linear-gradient(135deg,#6b7280,#4b5563);
-  border: 2px solid rgba(163,230,53,0.08);
+  border: 2px solid rgba(163,230,53,0.10);
 }
+.common .ornament { background: linear-gradient(135deg,#9ca3af,#6b7280); color:#061014; }
+
 .rare {
-  background: linear-gradient(135deg,#2563eb,#1e40af);
-  border: 2px solid rgba(96,165,250,0.12);
+  background: linear-gradient(135deg,#0ea5e9,#2563eb);
+  border: 2px solid rgba(96,165,250,0.14);
 }
+.rare .ornament { background: linear-gradient(135deg,#7dd3fc,#0369a1); color:#021023; }
+
 .epic {
-  background: linear-gradient(135deg,#7c3aed,#5b21b6);
-  border: 2px solid rgba(216,180,254,0.12);
+  background: linear-gradient(135deg,#7c3aed,#c084fc 65%, #6d28d9);
+  border: 2px solid rgba(216,180,254,0.16);
 }
+.epic .ornament { background: linear-gradient(45deg,#c084fc,#7c3aed); color:#0b0228; }
+
 .legendary {
-  background: linear-gradient(135deg,#f59e0b,#b45309);
-  border: 2px solid rgba(253,230,138,0.12);
+  background: linear-gradient(135deg,#f59e0b,#f97316 60%, #b45309);
+  border: 2px solid rgba(253,230,138,0.16);
 }
+.legendary .ornament { background: linear-gradient(45deg,#ffd27a,#ff8a00); color:#2a1200; }
+
 .mythic {
-  background: linear-gradient(135deg,#dc2626,#7f1d1d);
-  border: 2px solid rgba(252,165,165,0.12);
+  background: linear-gradient(135deg,#ff5f6d,#ffc371 40%, #7f1d1d);
+  border: 2px solid rgba(252,165,165,0.16);
 }
+.mythic .ornament { background: linear-gradient(45deg,#ff8a8a,#ffcf93); color:#3a0a0a; }
+
+/* Altarkarten spezielle reduzierte Optik (passt sich an) */
+.altar-slot .small-card { width:100%; height:100%; box-shadow:none; border-radius:8px; padding:8px; }
 
 /* kleine Feinheiten */
-.small-card .name, .card .name { font-size: 14px; }
-.rarity { font-size: 12px; opacity: 0.9; margin-top: 6px; }
-.altar-slot .small-card { width: 100%; height: 100%; box-shadow:none; border-radius:8px; padding:6px; }
+.small-card .name, .card .name { font-size:13px; }
+.rarity { font-size:12px; opacity:0.9; margin-top:6px; }
+
+/* Responsive */
+@media (max-width:800px){
+  .main-container { flex-direction:column; align-items:center; padding:16px; }
+  #altar { width: 92%; }
+  .altar-slot { width: 28%; height:120px; }
+}
 </style>
 </head>
 <body>
@@ -264,7 +289,6 @@ const rarities = [
   { name: 'Legendär', chance: 1.99 },
   { name: 'Mythisch', chance: 0.01 }
 ];
-
 const rarityMap = {
   'Gewöhnlich': 'common',
   'Selten': 'rare',
@@ -272,7 +296,6 @@ const rarityMap = {
   'Legendär': 'legendary',
   'Mythisch': 'mythic'
 };
-
 const tiers = ['Gewöhnlich','Selten','Episch','Legendär','Mythisch'];
 
 const allCards = [
@@ -303,30 +326,28 @@ let inventory = [];
 let altarSlots = [null, null, null];
 
 /* Utility */
-function rarityClass(rarityName){
-  return rarityMap[rarityName] || rarityName.toLowerCase();
-}
-function weightedRandomRarity(){
-  let roll = Math.random() * 100;
-  let sum = 0;
-  for (let r of rarities) {
-    sum += r.chance;
-    if (roll <= sum) return r.name;
-  }
+function rarityClass(r) { return rarityMap[r] || r.toLowerCase(); }
+function weightedRandomRarity() {
+  let roll = Math.random()*100, sum=0;
+  for (let r of rarities){ sum+=r.chance; if (roll<=sum) return r.name; }
   return rarities[0].name;
 }
 function pickRandomCardByRarity(rarity){
   const arr = allCards.filter(c => c.rarity === rarity);
   return { ...arr[Math.floor(Math.random()*arr.length)] };
 }
+function moveInArray(arr, from, to){
+  if (from === to) return;
+  const item = arr.splice(from,1)[0];
+  arr.splice(to,0,item);
+}
 
 /* Draw */
 function drawCard(){
   let rarity = weightedRandomRarity();
   let card = pickRandomCardByRarity(rarity);
-  // Qualität
   let qRoll = Math.random()*100;
-  if (qRoll <= 50) card.quality = 1 + Math.floor(Math.random() * 2); // 1-2
+  if (qRoll <= 50) card.quality = 1 + Math.floor(Math.random()*2);
   else if (qRoll <= 80) card.quality = 3;
   else if (qRoll <= 95) card.quality = 4;
   else card.quality = 5;
@@ -340,44 +361,76 @@ function showCurrentCard(card){
   const div = document.getElementById('currentCard');
   let stars = '✦'.repeat(card.quality);
   div.innerHTML = `<div class="card ${rarityClass(card.rarity)}">
+    <div class="ornament">${card.icon}</div>
     <div class="rarity">${card.rarity}</div>
     <div class="name">${card.name}</div>
-    <div class="icon">${card.icon}</div>
+    <div class="icon" style="font-size:48px">${card.icon}</div>
     <div class="stars">${stars}</div>
   </div>`;
 }
 
-/* Inventar & Dragging */
+/* Inventar rendern */
 function renderInventory(){
   const inv = document.getElementById('inventory');
   inv.innerHTML = '';
-  inventory.forEach((c, i) => {
+  inventory.forEach((c,i) => {
     const d = document.createElement('div');
     d.className = `small-card ${rarityClass(c.rarity)}`;
     d.draggable = true;
-    d.dataset.index = i; // stabile Zuordnung
+    d.dataset.index = i;
     let stars = '✦'.repeat(c.quality);
-    d.innerHTML = `<div class="rarity">${c.rarity}</div><div class="name">${c.name}</div><div class="icon">${c.icon}</div><div class="stars">${stars}</div>`;
+    d.innerHTML = `<div class="ornament">${c.icon}</div><div class="rarity">${c.rarity}</div><div class="name">${c.name}</div><div class="icon" style="font-size:36px">${c.icon}</div><div class="stars">${stars}</div>`;
     inv.appendChild(d);
   });
   attachDraggables();
-  renderAltar(); // damit Altarkarten aktualisiert sind (z.B. nach Tausch)
+  renderAltar();
 }
 
+/* Drag handlers für Inventarkarten (Start / Ende) */
 function attachDraggables(){
   const cards = document.querySelectorAll('#inventory .small-card');
   cards.forEach(card => {
     card.addEventListener('dragstart', e => {
       e.dataTransfer.setData('text/plain', 'inv:' + card.dataset.index);
       card.classList.add('dragging');
+      // allow move effect
+      try { e.dataTransfer.effectAllowed = 'move'; } catch(e){}
     });
-    card.addEventListener('dragend', e => {
-      card.classList.remove('dragging');
+    card.addEventListener('dragend', e => { card.classList.remove('dragging'); });
+    // drop on a card -> insert before this card
+    card.addEventListener('dragover', e => {
+      e.preventDefault();
+      card.classList.add('insert-before');
+    });
+    card.addEventListener('dragleave', e => { card.classList.remove('insert-before'); });
+    card.addEventListener('drop', e => {
+      e.preventDefault();
+      card.classList.remove('insert-before');
+      const data = e.dataTransfer.getData('text/plain');
+      const targetIdx = Number(card.dataset.index);
+      if (!data) return;
+      if (data.startsWith('inv:')){
+        const srcIdx = Number(data.split(':')[1]);
+        if (isNaN(srcIdx)) return;
+        // adjust target when removing earlier element
+        let dest = targetIdx;
+        if (srcIdx < dest) dest = dest - 1;
+        moveInArray(inventory, srcIdx, dest);
+        renderInventory();
+      } else if (data.startsWith('altar:')){
+        const aIdx = Number(data.split(':')[1]);
+        if (isNaN(aIdx)) return;
+        const cardObj = altarSlots[aIdx];
+        if (!cardObj) return;
+        altarSlots[aIdx] = null;
+        inventory.splice(targetIdx,0,cardObj);
+        renderInventory();
+      }
     });
   });
 }
 
-/* Altar-Rendering & Drop-Handling */
+/* Altar Rendering & Drag from altar */
 function renderAltar(){
   const slots = document.querySelectorAll('.altar-slot');
   slots.forEach(slotEl => {
@@ -389,30 +442,26 @@ function renderAltar(){
       d.className = `small-card ${rarityClass(c.rarity)}`;
       d.draggable = true;
       d.dataset.altarIndex = idx;
-      d.innerHTML = `<div class="rarity">${c.rarity}</div><div class="name">${c.name}</div><div class="icon">${c.icon}</div><div class="stars">${'✦'.repeat(c.quality)}</div>`;
-      // Drag from altar back to inventory or to another slot
+      d.innerHTML = `<div class="ornament">${c.icon}</div><div class="rarity">${c.rarity}</div><div class="name">${c.name}</div><div class="icon" style="font-size:36px">${c.icon}</div><div class="stars">${'✦'.repeat(c.quality)}</div>`;
       d.addEventListener('dragstart', e => {
         e.dataTransfer.setData('text/plain', 'altar:' + idx);
         d.classList.add('dragging');
+        try{ e.dataTransfer.effectAllowed = 'move'; } catch(e){}
       });
-      d.addEventListener('dragend', e => {
-        d.classList.remove('dragging');
-      });
+      d.addEventListener('dragend', e => { d.classList.remove('dragging'); });
       slotEl.appendChild(d);
     }
   });
 }
 
-/* Altar Drop - Setup */
+/* Altar slots droppable */
 const altarSlotElements = document.querySelectorAll('.altar-slot');
 altarSlotElements.forEach(slot => {
   slot.addEventListener('dragover', e => {
     e.preventDefault();
     slot.classList.add('over');
   });
-  slot.addEventListener('dragleave', e => {
-    slot.classList.remove('over');
-  });
+  slot.addEventListener('dragleave', e => slot.classList.remove('over'));
   slot.addEventListener('drop', e => {
     e.preventDefault();
     slot.classList.remove('over');
@@ -422,10 +471,9 @@ altarSlotElements.forEach(slot => {
     if (data.startsWith('inv:')){
       const invIdx = Number(data.split(':')[1]);
       if (isNaN(invIdx) || invIdx < 0 || invIdx >= inventory.length) return;
-      // Wenn Slot frei -> verschieben, sonst tauschen
       const card = inventory.splice(invIdx,1)[0];
       if (altarSlots[slotIdx]){
-        // swap: zurück in inventory an dieselbe Stelle (oder ans Ende)
+        // tausche: vorherige Karte zurück ins Inventar (ans Ende)
         inventory.push(altarSlots[slotIdx]);
       }
       altarSlots[slotIdx] = card;
@@ -434,16 +482,15 @@ altarSlotElements.forEach(slot => {
       const fromIdx = Number(data.split(':')[1]);
       if (isNaN(fromIdx) || fromIdx < 0 || fromIdx >= altarSlots.length) return;
       if (fromIdx === slotIdx) return;
-      // swap altar slots
-      const temp = altarSlots[slotIdx];
+      const tmp = altarSlots[slotIdx];
       altarSlots[slotIdx] = altarSlots[fromIdx];
-      altarSlots[fromIdx] = temp;
+      altarSlots[fromIdx] = tmp;
       renderAltar();
     }
   });
 });
 
-/* Ziehen vom Altar in das Inventar (z.B. auf Inventarbereich) */
+/* Ziehen vom Altar zurück ins Inventar (auf leeren Bereich = ans Ende) */
 const inventoryEl = document.getElementById('inventory');
 inventoryEl.addEventListener('dragover', e => e.preventDefault());
 inventoryEl.addEventListener('drop', e => {
@@ -455,9 +502,14 @@ inventoryEl.addEventListener('drop', e => {
     if (isNaN(idx)) return;
     const card = altarSlots[idx];
     if (!card) return;
-    // entferne vom Altar und ins Inventar
     altarSlots[idx] = null;
     inventory.push(card);
+    renderInventory();
+  } else if (data.startsWith('inv:')){
+    // wenn auf freien Bereich fallen, ans Ende verschieben
+    const src = Number(data.split(':')[1]);
+    if (isNaN(src)) return;
+    moveInArray(inventory, src, inventory.length-1 >= 0 ? inventory.length-1 : 0);
     renderInventory();
   }
 });
@@ -469,19 +521,12 @@ function summonFromAltar(){
     document.getElementById('altar-result').textContent = 'Leerer Altar — lege Karten hinein.';
     return;
   }
-  // Ermittle höchste Rarität unter den geopferten Karten
   let maxIndex = 0;
-  altarSlots.forEach(s => {
-    if (!s) return;
-    const idx = tiers.indexOf(s.rarity);
-    if (idx > maxIndex) maxIndex = idx;
-  });
-  // Chance auf "Stufenanstieg" abhängig von Gesamtqualität
+  altarSlots.forEach(s => { if (!s) return; const idx = tiers.indexOf(s.rarity); if (idx > maxIndex) maxIndex = idx; });
   const totalQuality = filled.reduce((a,b)=>a+(b?b.quality:0),0);
-  let bumpChance = Math.min(0.25 + (totalQuality - filled.length)*0.06, 0.6); // max ~60%
+  let bumpChance = Math.min(0.25 + (totalQuality - filled.length)*0.06, 0.6);
   let rewardIndex = Math.min(maxIndex + (Math.random() < bumpChance ? 1 : 0), tiers.length-1);
   const reward = pickRandomCardByRarity(tiers[rewardIndex]);
-  // clear altar
   altarSlots = [null, null, null];
   inventory.push(reward);
   renderInventory();
@@ -492,9 +537,8 @@ function summonFromAltar(){
 document.getElementById('drawBtn').addEventListener('click', drawCard);
 document.getElementById('sacrificeBtn').addEventListener('click', summonFromAltar);
 
-/* Init - ein paar Startkarten */
+/* Init - Demo Startkarten */
 (function initDemo(){
-  // ein paar Karten für Demozwecke
   for (let i=0;i<4;i++) drawCard();
 })();
 </script>
