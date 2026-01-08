@@ -8,7 +8,7 @@
 * { box-sizing: border-box; }
 body{
   margin:0;
-  font-family:Inter, Arial, sans-serif;
+  font-family: Arial, sans-serif;
   background: linear-gradient(180deg, var(--bg), #061327);
   color:#e5e7eb;
   min-height:100vh;

@@ -11,7 +11,7 @@
   <h1>Karten-Mini-Game</h1>
   <nav>
     <a href="index.html">Start</a>
-    <a href="minigames.html">Mini-Games</a>
+    <a href="minigames.html" aria-current="page">Mini-Games</a>
     <a href="projects.html">Projekte</a>
     <a href="kontakt.html">Kontakt</a>
     <a href="impressum.html">Impressum</a>
@@ -285,13 +285,19 @@ inventoryEl.addEventListener('drop', e => {
 
 const SCROLL_EDGE_PX = 80;
 const SCROLL_STEP_PX = 16;
+let scrollFrame = null;
 /* Auto-Scroll beim Ziehen: erlaubt Scrollen während Karten gehalten werden */
 document.addEventListener('dragover', e => {
-  if (e.clientY < SCROLL_EDGE_PX){
-    window.scrollBy({ top: -SCROLL_STEP_PX, behavior: 'smooth' });
-  } else if (window.innerHeight - e.clientY < SCROLL_EDGE_PX){
-    window.scrollBy({ top: SCROLL_STEP_PX, behavior: 'smooth' });
-  }
+  if (scrollFrame) return;
+  const y = e.clientY;
+  scrollFrame = requestAnimationFrame(() => {
+    if (y < SCROLL_EDGE_PX){
+      window.scrollBy({ top: -SCROLL_STEP_PX, behavior: 'smooth' });
+    } else if (window.innerHeight - y < SCROLL_EDGE_PX){
+      window.scrollBy({ top: SCROLL_STEP_PX, behavior: 'smooth' });
+    }
+    scrollFrame = null;
+  });
 });
 
 /* Opfer- / Belohnungslogik
