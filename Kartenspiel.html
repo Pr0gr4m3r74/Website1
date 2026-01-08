@@ -283,13 +283,14 @@ inventoryEl.addEventListener('drop', e => {
   }
 });
 
+const SCROLL_EDGE_PX = 80;
+const SCROLL_STEP_PX = 16;
 /* Auto-Scroll beim Ziehen: erlaubt Scrollen während Karten gehalten werden */
 document.addEventListener('dragover', e => {
-  const edge = 80;
-  if (e.clientY < edge){
-    window.scrollBy({ top: -16, behavior: 'smooth' });
-  } else if (window.innerHeight - e.clientY < edge){
-    window.scrollBy({ top: 16, behavior: 'smooth' });
+  if (e.clientY < SCROLL_EDGE_PX){
+    window.scrollBy({ top: -SCROLL_STEP_PX, behavior: 'smooth' });
+  } else if (window.innerHeight - e.clientY < SCROLL_EDGE_PX){
+    window.scrollBy({ top: SCROLL_STEP_PX, behavior: 'smooth' });
   }
 });
 

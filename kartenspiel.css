@@ -157,6 +157,7 @@ footer{ background:#020617; text-align:center; padding:14px; font-size:14px; col
   flex-direction:column;
   justify-content:space-between;
   margin:0 auto;
+  /* pan-y hält Scrollen während Drag erlaubt */
   touch-action: pan-y;
 }
 .small-card{
