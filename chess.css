@@ -74,6 +74,24 @@ h1{ margin:0 0 12px 0; color:var(--accent); }
   background:linear-gradient(180deg,#06b6d4,#0ea5e9);
   color:#021023;
 }
+.captured{ display:flex; flex-direction:column; gap:4px; font-size:14px; color:var(--muted); }
+.advantage{ display:flex; flex-direction:column; gap:6px; }
+.advantage-labels{ display:flex; justify-content:space-between; font-size:12px; color:var(--muted); }
+.advantage-track{
+  position:relative;
+  width:100%;
+  height:12px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.08);
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.05);
+}
+.advantage-fill{
+  height:100%;
+  width:50%;
+  transition:width 160ms ease, background 160ms ease;
+  background:linear-gradient(90deg,#f8fafc,#0f172a);
+}
 .status{ color:var(--muted); font-size:14px; }
 .moves{ max-height:320px; overflow:auto; background:rgba(0,0,0,0.04); padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02); }
 footer{ margin-top:auto; width:100%; background:#010612; padding:12px; text-align:center; color:var(--muted); }
