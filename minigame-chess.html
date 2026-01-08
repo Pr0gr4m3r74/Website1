@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mini-Game — Schach</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css" />
+<style>
+  :root{ --bg:#021022; --accent:#38bdf8; --muted:#94a3b8; }
+  body{ margin:0; font-family:Inter, Arial, sans-serif; background:linear-gradient(180deg,var(--bg),#03142a); color:#eaf6ff; min-height:100vh; display:flex; flex-direction:column; align-items:center; }
+  header{ width:100%; background:#010612; padding:12px 8px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,0.6); }
+  nav a{ margin:0 8px; color:var(--accent); text-decoration:none; font-weight:700; }
+  main{ margin:24px auto; width:100%; max-width:920px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); border-radius:12px; border:1px solid rgba(255,255,255,0.03); }
+  h1{ margin:0 0 12px 0; color:var(--accent); }
+  .board-wrap{ display:flex; gap:20px; align-items:flex-start; justify-content:center; flex-wrap:wrap; }
+  #board { width: 420px; }
+  .controls{ display:flex; flex-direction:column; gap:10px; min-width:220px; }
+  .controls button{ padding:10px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:700; background:linear-gradient(180deg,#06b6d4,#0ea5e9); color:#021023; }
+  .status{ color:var(--muted); font-size:14px; }
+  .moves{ max-height:320px; overflow:auto; background:rgba(0,0,0,0.04); padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02); }
+  footer{ margin-top:auto; width:100%; background:#010612; padding:12px; text-align:center; color:var(--muted); }
+  @media (max-width:900px){ #board{ width:320px; } .board-wrap{ flex-direction:column; align-items:center; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Schach</h1>
+  <nav>
+    <a href="index.html">Start</a>
+    <a href="minigames.html">Mini-Games</a>
+    <a href="kontakt.html">Kontakt</a>
+    <a href="impressum.html">Impressum</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Spiele gegen einen einfachen Computergegner</h2>
+  <div class="board-wrap">
+    <div id="board"></div>
+    <div class="controls">
+      <div class="status" id="status">Status: Bereit</div>
+      <button id="newGameBtn">Neues Spiel</button>
+      <button id="undoBtn">Rückgängig</button>
+      <label class="status">Difficulty: Einfach (Zufallszüge)</label>
+      <div class="moves" id="moves">Züge: —</div>
+    </div>
+  </div>
+</main>
+
+<footer>© 2026 IT Solutions</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/1.0.0/chess.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+<script>
+// Simple Chess page: uses chess.js for rules and chessboard.js for UI
+const game = new Chess();
+let board = null;
+let $status = document.getElementById('status');
+let $moves = document.getElementById('moves');
+const whiteIsHuman = true; // human plays white by default
+
+function updateStatus(){
+  let status = '';
+  const turn = game.turn() === 'w' ? 'Weiß' : 'Schwarz';
+  if (game.in_checkmate()){
+    status = 'Schachmatt — ' + (turn === 'Weiß' ? 'Schwarz' : 'Weiß') + ' hat gewonnen.';
+  } else if (game.in_draw()){
+    status = 'Unentschieden.';
+  } else {
+    status = 'Am Zug: ' + turn + (game.in_check() ? ' (Schach!)' : '');
+  }
+  $status.textContent = 'Status: ' + status;
+  $moves.innerHTML = '<strong>Alle Züge</strong><br>' + game.pgn();
+}
+
+function onDragStart(source, piece, position, orientation){
+  // do not pick up pieces if the game is over
+  if (game.game_over()) return false;
+  // only pick up pieces for the side to move (white human)
+  if ((game.turn() === 'w' && piece.search(/^b/) !== -1) || (game.turn() === 'b' && piece.search(/^w/) !== -1)){
+    // if it's AI turn, prevent drag
+    return false;
+  }
+}
+
+function onDrop(source, target){
+  // see if the move is legal
+  const move = game.move({ from: source, to: target, promotion: 'q' });
+  if (move === null) return 'snapback';
+  updateStatus();
+  window.setTimeout(function(){
+    if (!game.game_over()) makeAIMove();
+  }, 250);
+}
+
+function onSnapEnd(){
+  board.position(game.fen());
+}
+
+function makeAIMove(){
+  // very simple AI: choose a random legal move
+  const moves = game.moves();
+  if (moves.length === 0) return;
+  const move = moves[Math.floor(Math.random()*moves.length)];
+  game.move(move);
+  board.position(game.fen());
+  updateStatus();
+}
+
+const cfg = {
+  draggable: true,
+  position: 'start',
+  onDragStart: onDragStart,
+  onDrop: onDrop,
+  onSnapEnd: onSnapEnd
+};
+
+board = Chessboard('board', cfg);
+updateStatus();
+
+// Controls
+document.getElementById('newGameBtn').addEventListener('click', ()=>{
+  game.reset();
+  board.start();
+  updateStatus();
+});
+
+document.getElementById('undoBtn').addEventListener('click', ()=>{
+  game.undo();
+  game.undo(); // undo both human and AI move if possible
+  board.position(game.fen());
+  updateStatus();
+});
+</script>
+</body>
+</html>
