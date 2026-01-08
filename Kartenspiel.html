@@ -290,6 +290,7 @@ let scrollFrame = null;
 document.addEventListener('dragover', e => {
   if (scrollFrame) return;
   const y = e.clientY;
+  // throttled via requestAnimationFrame, damit Scroll nur einmal pro Frame ausgelöst wird
   scrollFrame = requestAnimationFrame(() => {
     if (y < SCROLL_EDGE_PX){
       window.scrollBy({ top: -SCROLL_STEP_PX, behavior: 'smooth' });

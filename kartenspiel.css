@@ -168,6 +168,7 @@ footer{ background:#020617; text-align:center; padding:14px; font-size:14px; col
   justify-content:space-between;
   cursor:grab;
   overflow:visible;
+  /* pan-y erlaubt vertikales Scrollen auch bei Drag auf Touch-Geräten */
   touch-action: pan-y;
 }
 .small-card.dragging{ opacity:0.78; transform:scale(1.04); cursor:grabbing; z-index:60; }
