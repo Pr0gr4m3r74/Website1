@@ -48,7 +48,7 @@ footer { background:#020617; text-align:center; padding:14px; font-size:14px; co
   background:
     radial-gradient(160px 100px at 50% 0%, rgba(255,255,255,0.03), transparent 16%),
     linear-gradient(180deg,#07122a 0%, #0b2036 45%, #071224 100%);
-  padding:20px;
+  padding:12px 20px 20px 20px; /* oben etwas weniger, damit Titel im Rahmen sitzt */
   border-radius:18px;
   box-shadow: 0 14px 40px rgba(2,6,23,0.75), inset 0 3px 14px rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.04);
@@ -60,7 +60,7 @@ footer { background:#020617; text-align:center; padding:14px; font-size:14px; co
   position:absolute;
   left:50%;
   transform:translateX(-50%);
-  top:-26px;
+  top:-18px; /* Dekoration etwas näher an Box */
   width:180px;
   height:48px;
   background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
@@ -69,7 +69,9 @@ footer { background:#020617; text-align:center; padding:14px; font-size:14px; co
   filter: blur(0.8px);
   opacity:0.95;
 }
-#altar h3 { text-align:center; margin:0 0 10px 0; font-size:19px; letter-spacing:0.6px; }
+#altar h3 { text-align:center; margin:-6px 0 10px 0; font-size:19px; letter-spacing:0.6px; }
+
+/* kleine Anpassung: Slots dichter zusammen */
 #altar-slots {
   display:flex;
   justify-content:space-between;
@@ -157,7 +159,8 @@ footer { background:#020617; text-align:center; padding:14px; font-size:14px; co
   user-select:none;
   overflow:visible;
 }
-.card { width:180px; height:240px; display:flex; flex-direction:column; justify-content:space-between; margin:0 auto; }
+/* große Karte (im Vorschau) soll Scrollen nicht blocken */
+.card { width:180px; height:240px; display:flex; flex-direction:column; justify-content:space-between; margin:0 auto; touch-action: pan-y; }
 .small-card { width:160px; height:180px; display:flex; flex-direction:column; justify-content:space-between; cursor:grab; overflow:visible; touch-action: pan-y; }
 /* touch-action: pan-y erlaubt Scrollen bei Touch während Drag */
 .small-card.dragging { opacity:0.78; transform:scale(1.04); cursor:grabbing; z-index:60; }
@@ -188,33 +191,34 @@ footer { background:#020617; text-align:center; padding:14px; font-size:14px; co
 }
 
 /* ===== Rarity styles (bunter / wild + Ornamentfarben) ===== */
+/* Farben lebendiger gemacht, damit die Karten weniger eintönig wirken */
 .common {
-  background: linear-gradient(135deg,#6b7280,#4b5563 70%);
-  border: 2px solid rgba(163,230,53,0.10);
+  background: linear-gradient(135deg,#8fbf8f 0%, #6ea06e 60%, #4f7f4f 100%);
+  border: 2px solid rgba(255,255,255,0.04);
 }
-.common .ornament { background: linear-gradient(135deg,#c7d2fe,#9ca3af); color:#081018; }
+.common .ornament { background: linear-gradient(135deg,#dfffe0,#bfeebb); color:#07200a; }
 
 .rare {
-  background: linear-gradient(135deg,#06b6d4,#2563eb 60%, #0ea5e9);
-  border: 2px solid rgba(96,165,250,0.14);
+  background: linear-gradient(135deg,#38bdf8 0%, #60a5fa 55%, #2563eb 100%);
+  border: 2px solid rgba(96,165,250,0.18);
 }
 .rare .ornament { background: linear-gradient(45deg,#7dd3fc,#0369a1); color:#021023; }
 
 .epic {
-  background: linear-gradient(135deg,#7c3aed,#c084fc 60%, #6d28d9);
-  border: 2px solid rgba(216,180,254,0.18);
+  background: linear-gradient(135deg,#7c3aed 0%, #c084fc 50%, #ec4899 100%);
+  border: 2px solid rgba(216,180,254,0.22);
 }
-.epic .ornament { background: linear-gradient(45deg,#c084fc,#7c3aed); color:#0b0228; }
+.epic .ornament { background: linear-gradient(45deg,#f0abfc,#7c3aed); color:#1a042e; }
 
 .legendary {
-  background: linear-gradient(135deg,#f97316,#f59e0b 55%, #b45309);
-  border: 2px solid rgba(253,230,138,0.18);
+  background: linear-gradient(135deg,#ffb86b 0%, #f97316 45%, #d97706 100%);
+  border: 2px solid rgba(255,206,125,0.22);
 }
 .legendary .ornament { background: linear-gradient(45deg,#ffd27a,#ff8a00); color:#2a1200; }
 
 .mythic {
-  background: linear-gradient(135deg,#ff5f6d,#ffc371 45%, #7f1d1d);
-  border: 2px solid rgba(252,165,165,0.18);
+  background: linear-gradient(135deg,#ff7ab6 0%, #ff5f6d 40%, #7f1d1d 100%);
+  border: 2px solid rgba(252,165,165,0.24);
 }
 .mythic .ornament { background: linear-gradient(45deg,#ff8a8a,#ffcf93); color:#3a0a0a; }
 
@@ -290,7 +294,7 @@ const tiers = ['Gewöhnlich','Selten','Episch','Legendär','Mythisch'];
 
 const allCards = [
   { name: 'Erd-Essenz', icon: '⬛', rarity: 'Gewöhnlich' },
-  { name: 'Holz-Essenz', icon: '🟫', rarity: 'Gew��hnlich' },
+  { name: 'Holz-Essenz', icon: '🟫', rarity: 'Gewöhnlich' },
   { name: 'Wasser-Essenz', icon: '💧', rarity: 'Gewöhnlich' },
   { name: 'Wind-Essenz', icon: '🌫️', rarity: 'Gewöhnlich' },
   { name: 'Licht-Funke', icon: '✨', rarity: 'Gewöhnlich' },
@@ -331,16 +335,19 @@ function moveInArray(arr, from, to){
   const item = arr.splice(from,1)[0];
   arr.splice(to,0,item);
 }
+function randomQuality(){
+  const qRoll = Math.random()*100;
+  if (qRoll <= 50) return 1 + Math.floor(Math.random()*2); // 1-2
+  else if (qRoll <= 80) return 3;
+  else if (qRoll <= 95) return 4;
+  else return 5;
+}
 
 /* Draw */
 function drawCard(){
   let rarity = weightedRandomRarity();
   let card = pickRandomCardByRarity(rarity);
-  let qRoll = Math.random()*100;
-  if (qRoll <= 50) card.quality = 1 + Math.floor(Math.random()*2);
-  else if (qRoll <= 80) card.quality = 3;
-  else if (qRoll <= 95) card.quality = 4;
-  else card.quality = 5;
+  card.quality = randomQuality();
   inventory.push(card);
   showCurrentCard(card);
   renderInventory();
@@ -508,10 +515,10 @@ inventoryEl.addEventListener('drop', e => {
 });
 
 /* Opfer- / Belohnungslogik
-   Neue deterministische Regeln:
-   - 3 Karten 'Selten' in den Altar -> immer 1 Episch
-   - 3 Karten 'Legendär' in den Altar -> immer 1 Mythisch
-   Priorität vor sonstiger Zufalls-/Bump-Logik.
+   Regeln:
+   - Wenn alle 3 belegten Slots dieselbe Seltenheit haben -> garantiert nächsthöhere Seltenheit (falls vorhanden).
+   - Sonstige Logik: highest rarity + Chance auf bump basierend auf Qualität.
+   - Belohnung bekommt immer eine zufällige Qualität (randomQuality()).
 */
 function summonFromAltar(){
   const filled = altarSlots.filter(s => s !== null);
@@ -520,26 +527,25 @@ function summonFromAltar(){
     return;
   }
 
-  // prüfe deterministische Kombinationen (3 Selten => Episch ; 3 Legendär => Mythisch)
+  // counts & quick-check ob alle 3 gleich (und es sind 3 gelegt)
   const counts = {};
   altarSlots.forEach(s => { if (s) counts[s.rarity] = (counts[s.rarity]||0) + 1; });
-  // Priorität: 3 Legendär -> Mythisch
-  if ((counts['Legendär'] || 0) >= 3) {
-    const reward = pickRandomCardByRarity('Mythisch');
-    altarSlots = [null, null, null];
-    inventory.push(reward);
-    renderInventory();
-    document.getElementById('altar-result').innerHTML = `Opfer erfolgreich: 3 × Legendär → Belohnung: <strong>${reward.name}</strong> ${reward.icon} (Mythisch)`;
-    return;
-  }
-  // 3 Selten -> Episch
-  if ((counts['Selten'] || 0) >= 3) {
-    const reward = pickRandomCardByRarity('Episch');
-    altarSlots = [null, null, null];
-    inventory.push(reward);
-    renderInventory();
-    document.getElementById('altar-result').innerHTML = `Opfer erfolgreich: 3 × Selten → Belohnung: <strong>${reward.name}</strong> ${reward.icon} (Episch)`;
-    return;
+
+  if (filled.length === 3){
+    const raritiesSet = Object.keys(counts);
+    if (raritiesSet.length === 1){
+      // alle drei gleich -> garantierter Bump um 1 Tier (wenn möglich)
+      const currentRarity = raritiesSet[0];
+      const idx = Math.max(0, tiers.indexOf(currentRarity));
+      const rewardIndex = Math.min(idx + 1, tiers.length - 1);
+      const reward = pickRandomCardByRarity(tiers[rewardIndex]);
+      reward.quality = randomQuality();
+      altarSlots = [null, null, null];
+      inventory.push(reward);
+      renderInventory();
+      document.getElementById('altar-result').innerHTML = `Opfer erfolgreich: 3 × ${currentRarity} → Belohnung: <strong>${reward.name}</strong> ${reward.icon} (${reward.rarity})`;
+      return;
+    }
   }
 
   // sonstige Logik wie vorher: highest rarity + chance auf bump basierend auf Qualität
@@ -549,6 +555,7 @@ function summonFromAltar(){
   let bumpChance = Math.min(0.25 + (totalQuality - filled.length)*0.06, 0.6);
   let rewardIndex = Math.min(maxIndex + (Math.random() < bumpChance ? 1 : 0), tiers.length-1);
   const reward = pickRandomCardByRarity(tiers[rewardIndex]);
+  reward.quality = randomQuality();
   altarSlots = [null, null, null];
   inventory.push(reward);
   renderInventory();
