@@ -1,5 +1,5 @@
 :root{ --bg:#021022; --accent:#38bdf8; --muted:#94a3b8; color-scheme: dark; }
-* { box-sizing:border-box; }
+* { box-sizing: border-box; }
 body{
   margin:0;
   font-family:Inter, Arial, sans-serif;
