@@ -150,6 +150,7 @@ footer{ background:#020617; text-align:center; padding:14px; font-size:14px; col
   user-select:none;
   overflow:visible;
 }
+/* pan-y hält Scrollen während Drag erlaubt (Touch) */
 .card{
   width:180px;
   height:240px;
@@ -157,7 +158,6 @@ footer{ background:#020617; text-align:center; padding:14px; font-size:14px; col
   flex-direction:column;
   justify-content:space-between;
   margin:0 auto;
-  /* pan-y hält Scrollen während Drag erlaubt */
   touch-action: pan-y;
 }
 .small-card{
@@ -168,7 +168,6 @@ footer{ background:#020617; text-align:center; padding:14px; font-size:14px; col
   justify-content:space-between;
   cursor:grab;
   overflow:visible;
-  /* pan-y erlaubt vertikales Scrollen auch bei Drag auf Touch-Geräten */
   touch-action: pan-y;
 }
 .small-card.dragging{ opacity:0.78; transform:scale(1.04); cursor:grabbing; z-index:60; }
