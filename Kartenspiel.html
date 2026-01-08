@@ -287,7 +287,7 @@ const DRAG_SCROLL = { edge: 80, step: 16 };
 let scrollFrame = null;
 /* Auto-Scroll beim Ziehen: erlaubt Scrollen während Karten gehalten werden */
 document.addEventListener('dragover', e => {
-  if (scrollFrame) return;
+  if (scrollFrame) cancelAnimationFrame(scrollFrame);
   const y = e.clientY;
   // throttled via requestAnimationFrame, damit Scroll nur einmal pro Frame ausgelöst wird
   scrollFrame = requestAnimationFrame(() => {
