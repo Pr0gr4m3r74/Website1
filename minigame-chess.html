@@ -24,10 +24,20 @@
     <div id="board"></div>
     <div class="controls">
       <div class="status" id="status">Status: Bereit</div>
+      <div class="advantage">
+        <div class="advantage-labels"><span>Weiß</span><span>Schwarz</span></div>
+        <div class="advantage-track" aria-label="Vorteilsanzeige">
+          <div id="advantageFill" class="advantage-fill"></div>
+        </div>
+      </div>
       <button id="newGameBtn">Neues Spiel</button>
       <button id="undoBtn">Rückgängig</button>
       <label class="status">Difficulty: Einfach (Heuristik)</label>
       <label class="status">Bauern werden automatisch zur Dame befördert.</label>
+      <div class="captured">
+        <div><strong>Gefallene weiße Figuren:</strong> <span id="capturedWhite">—</span></div>
+        <div><strong>Gefallene schwarze Figuren:</strong> <span id="capturedBlack">—</span></div>
+      </div>
       <div class="moves" id="moves">Züge: —</div>
     </div>
   </div>
@@ -39,12 +49,46 @@
 const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const movesEl = document.getElementById('moves');
+const capturedWhiteEl = document.getElementById('capturedWhite');
+const capturedBlackEl = document.getElementById('capturedBlack');
+const advantageFillEl = document.getElementById('advantageFill');
 const humanColor = 'w';
 const aiColor = 'b';
 const PIECE_VALUES = { p:1, n:3, b:3, r:5, q:9, k:100 };
 const pieceSymbols = {
   'P':'♙','p':'♟','R':'♖','r':'♜','N':'♘','n':'♞','B':'♗','b':'♝','Q':'♕','q':'♛','K':'♔','k':'♚'
 };
+
+function evaluateMaterial(board){
+  let score = 0;
+  for (let r=0;r<8;r++){
+    for (let c=0;c<8;c++){
+      const piece = board[r][c];
+      if (!piece) continue;
+      const val = PIECE_VALUES[piece.toLowerCase()];
+      if (!val) continue;
+      score += pieceColor(piece) === 'w' ? val : -val;
+    }
+  }
+  return score;
+}
+
+function renderCaptured(){
+  capturedWhiteEl.textContent = state.captured.w.length ? state.captured.w.map(p => pieceSymbols[p]).join(' ') : '—';
+  capturedBlackEl.textContent = state.captured.b.length ? state.captured.b.map(p => pieceSymbols[p]).join(' ') : '—';
+}
+
+function updateAdvantageBar(){
+  const score = evaluateMaterial(state.board);
+  const clamped = Math.max(-12, Math.min(12, score));
+  const percent = 50 + (clamped / 12) * 50;
+  advantageFillEl.style.width = `${percent}%`;
+  advantageFillEl.style.background = score >= 0
+    ? 'linear-gradient(90deg,#f8fafc,#38bdf8)'
+    : 'linear-gradient(90deg,#0f172a,#0b1224)';
+  advantageFillEl.setAttribute('aria-valuenow', percent.toFixed(1));
+  advantageFillEl.setAttribute('aria-label', score === 0 ? 'Ausgeglichen' : (score > 0 ? 'Vorteil Weiß' : 'Vorteil Schwarz'));
+}
 
 function createInitialBoard(){
   return [
@@ -68,7 +112,10 @@ function cloneState(state){
     halfmove: state.halfmove,
     fullmove: state.fullmove,
     history: state.history ? state.history.slice() : [],
-    moves: [...state.moves]
+    moves: [...state.moves],
+    captured: { w:[...state.captured.w], b:[...state.captured.b] },
+    gameOver: state.gameOver,
+    winner: state.winner
   };
 }
 
@@ -81,12 +128,23 @@ function freshState(){
     halfmove: 0,
     fullmove: 1,
     history: [],
-    moves: []
+    moves: [],
+    captured: { w:[], b:[] },
+    gameOver: false,
+    winner: null
   };
 }
 
 function refreshLegalMoves(){
-  cachedLegal = legalMoves(state, state.turn);
+  if (state.gameOver){
+    cachedLegal = [];
+    return;
+  }
+  let moves = legalMoves(state, state.turn);
+  if (isInCheck(state, state.turn)){
+    moves = moves.filter(m => state.board[m.from.r][m.from.c].toLowerCase() === 'k');
+  }
+  cachedLegal = moves;
 }
 
 let state = freshState();
@@ -341,8 +399,9 @@ function executeMove(currentState, move, { recordHistory = true, addNotation = t
   const opp = opponent(color);
   const piece = move.piece || currentState.board[move.from.r][move.from.c];
   const targetPiece = move.castle ? null : currentState.board[move.to.r][move.to.c];
+  const capturedPiece = move.enPassant ? (color === 'w' ? 'p' : 'P') : targetPiece;
   const isPawn = piece.toLowerCase() === 'p';
-  const isCapture = !!targetPiece || move.enPassant;
+  const isCapture = !!capturedPiece;
 
   if (recordHistory){
     currentState.history.push(cloneState(currentState));
@@ -384,6 +443,17 @@ function executeMove(currentState, move, { recordHistory = true, addNotation = t
     }
   }
 
+  if (capturedPiece){
+    const capColor = pieceColor(capturedPiece);
+    if (capColor){
+      currentState.captured[capColor].push(capturedPiece);
+    }
+    if (capturedPiece.toLowerCase() === 'k'){
+      currentState.gameOver = true;
+      currentState.winner = color;
+    }
+  }
+
   // castling rights update
   if (piece.toLowerCase() === 'k'){
     if (color === 'w'){ currentState.castling.wK = false; currentState.castling.wQ = false; }
@@ -416,8 +486,13 @@ function executeMove(currentState, move, { recordHistory = true, addNotation = t
   currentState.halfmove = (isPawn || isCapture) ? 0 : currentState.halfmove + 1;
   if (color === 'b') currentState.fullmove += 1;
 
+  if (!currentState.gameOver && !findKing(currentState.board, opp)){
+    currentState.gameOver = true;
+    currentState.winner = color;
+  }
+
   if (addNotation){
-    const checkAfter = isInCheck(currentState, opp);
+    const checkAfter = !currentState.gameOver && isInCheck(currentState, opp);
     const mateAfter = checkAfter && legalMoves(currentState, opp).length === 0;
     currentState.moves.push(buildNotation(move, piece, isCapture, color, checkAfter, mateAfter));
   }
@@ -441,7 +516,7 @@ function renderBoard(){
   for (let r=0; r<8; r++){
     for (let c=0; c<8; c++){
       const btn = document.createElement('button');
-      btn.className = `square ${((r+c)%2===0) ? 'light' : 'dark'}`;
+      btn.className = `square ${((r+c)%2===0) ? 'dark' : 'light'}`;
       if (selectedSquare && selectedSquare.r === r && selectedSquare.c === c){
         btn.classList.add('selected');
       }
@@ -460,6 +535,7 @@ function renderBoard(){
 }
 
 function handleSquareClick(r,c){
+  if (state.gameOver) return;
   if (cachedLegal.length === 0) return;
   const piece = state.board[r][c];
   if (selectedSquare){
@@ -481,13 +557,14 @@ function handleSquareClick(r,c){
 }
 
 function makePlayerMove(move){
+  if (state.gameOver) return;
   executeMove(state, move);
   refreshLegalMoves();
   selectedSquare = null;
   highlightedTargets = [];
   renderBoard();
   updateStatus();
-  if (state.turn === aiColor && cachedLegal.length > 0){
+  if (!state.gameOver && state.turn === aiColor && cachedLegal.length > 0){
     setTimeout(makeAIMove, 300);
   }
 }
@@ -517,7 +594,7 @@ function chooseAIMove(moves){
 }
 
 function makeAIMove(){
-  if (state.turn !== aiColor) return;
+  if (state.gameOver || state.turn !== aiColor) return;
   const moves = cachedLegal;
   if (!moves.length){
     updateStatus();
@@ -532,15 +609,20 @@ function makeAIMove(){
 
 function updateStatus(){
   const legal = cachedLegal;
-  const inCheck = isInCheck(state, state.turn);
+  const inCheck = !state.gameOver && isInCheck(state, state.turn);
   let message = '';
-  if (!legal.length){
+  if (state.gameOver){
+    const winnerText = state.winner ? (state.winner === 'w' ? 'Weiß' : 'Schwarz') : 'Niemand';
+    message = state.winner ? `${winnerText} hat gewonnen (König gefallen).` : 'Spiel beendet.';
+  } else if (!legal.length){
     message = inCheck ? `Schachmatt — ${(state.turn === 'w' ? 'Schwarz' : 'Weiß')} hat gewonnen.` : 'Patt — Unentschieden.';
   } else {
-    message = `Am Zug: ${state.turn === 'w' ? 'Weiß' : 'Schwarz'}${inCheck ? ' (Schach!)' : ''}`;
+    message = `Am Zug: ${state.turn === 'w' ? 'Weiß' : 'Schwarz'}${inCheck ? ' (Schach! König muss ziehen)' : ''}`;
   }
   statusEl.textContent = 'Status: ' + message;
   movesEl.innerHTML = state.moves.length ? `<strong>Alle Züge</strong><br>${state.moves.join('<br>')}` : 'Züge: —';
+  renderCaptured();
+  updateAdvantageBar();
 }
 
 function resetGame(){
