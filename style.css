@@ -1,45 +1,119 @@
-/* Diese Datei als style.css speichern */
-body {
-margin: 0;
-font-family: Arial, sans-serif;
-background: #0f172a;
-color: #e5e7eb;
+:root{
+  --bg:#0f172a;
+  --panel:#0b1a32;
+  --accent:#38bdf8;
+  --muted:#94a3b8;
+  color-scheme: dark;
 }
-header {
-background: #020617;
-padding: 20px;
-text-align: center;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-nav a {
-margin: 0 12px;
-color: #38bdf8;
-text-decoration: none;
-font-weight: bold;
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg), #061327);
+  color:#e5e7eb;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
 }
-main {
-padding: 40px 20px;
-max-width: 800px;
-margin: auto;
+header{
+  background:#020617;
+  padding:16px 14px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.55);
 }
-button {
-background: #38bdf8;
-border: none;
-padding: 10px 16px;
-border-radius: 8px;
-cursor: pointer;
-font-weight: bold;
+nav a{
+  margin:0 12px;
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:800;
 }
-input, textarea {
-width: 100%;
-padding: 10px;
-margin-bottom: 16px;
-border-radius: 6px;
-border: none;
+main{
+  padding:32px 20px;
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
 }
-footer {
-background: #020617;
-text-align: center;
-padding: 20px;
-font-size: 14px;
-color: #94a3b8;
+button{
+  background:linear-gradient(180deg,#06b6d4,#0ea5e9);
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:800;
+  color:#021023;
+  box-shadow:0 8px 18px rgba(2,6,23,0.45);
+}
+input, textarea{
+  width:100%;
+  padding:10px;
+  margin-bottom:16px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);
+  color:#e5e7eb;
+}
+footer{
+  background:#020617;
+  text-align:center;
+  padding:18px;
+  font-size:14px;
+  color:var(--muted);
+  margin-top:auto;
+}
+
+/* ===== Mini-Games Übersicht ===== */
+body.minigames main{ padding-top:22px; }
+body.minigames .grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+  gap:18px;
+}
+.game-tile{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+  border-radius:12px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,0.03);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.game-tile:hover{ transform: translateY(-6px); box-shadow: 0 18px 40px rgba(56,189,248,0.06); }
+.tile-title{ font-weight:900; color:var(--accent); margin-bottom:6px; }
+.tile-desc{ color:var(--muted); margin-bottom:12px; font-size:14px; min-height:40px; }
+.play-btn{
+  display:inline-block;
+  padding:10px 12px;
+  border-radius:10px;
+  text-decoration:none;
+  background:linear-gradient(180deg,#06b6d4,#0ea5e9);
+  color:#021023;
+  font-weight:800;
+}
+@media (max-width:520px){ .tile-desc{ min-height:0; } }
+
+/* ===== Projekte ===== */
+.project-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap:18px;
+}
+.project-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+  padding:18px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow:0 10px 24px rgba(0,0,0,0.35);
+}
+.project-card h3{ margin-top:0; color:var(--accent); }
+.project-meta{ color:var(--muted); font-size:14px; margin-bottom:10px; }
+.tag{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:8px;
+  background:rgba(56,189,248,0.12);
+  color:#7dd3fc;
+  font-size:12px;
+  margin-right:6px;
 }
