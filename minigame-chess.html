@@ -5,22 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Mini-Game — Schach</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css" />
-<style>
-  :root{ --bg:#021022; --accent:#38bdf8; --muted:#94a3b8; }
-  body{ margin:0; font-family:Inter, Arial, sans-serif; background:linear-gradient(180deg,var(--bg),#03142a); color:#eaf6ff; min-height:100vh; display:flex; flex-direction:column; align-items:center; }
-  header{ width:100%; background:#010612; padding:12px 8px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,0.6); }
-  nav a{ margin:0 8px; color:var(--accent); text-decoration:none; font-weight:700; }
-  main{ margin:24px auto; width:100%; max-width:920px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); border-radius:12px; border:1px solid rgba(255,255,255,0.03); }
-  h1{ margin:0 0 12px 0; color:var(--accent); }
-  .board-wrap{ display:flex; gap:20px; align-items:flex-start; justify-content:center; flex-wrap:wrap; }
-  #board { width: 420px; }
-  .controls{ display:flex; flex-direction:column; gap:10px; min-width:220px; }
-  .controls button{ padding:10px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:700; background:linear-gradient(180deg,#06b6d4,#0ea5e9); color:#021023; }
-  .status{ color:var(--muted); font-size:14px; }
-  .moves{ max-height:320px; overflow:auto; background:rgba(0,0,0,0.04); padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02); }
-  footer{ margin-top:auto; width:100%; background:#010612; padding:12px; text-align:center; color:var(--muted); }
-  @media (max-width:900px){ #board{ width:320px; } .board-wrap{ flex-direction:column; align-items:center; } }
-</style>
+<link rel="stylesheet" href="chess.css" />
 </head>
 <body>
 <header>
@@ -28,6 +13,7 @@
   <nav>
     <a href="index.html">Start</a>
     <a href="minigames.html">Mini-Games</a>
+    <a href="projects.html">Projekte</a>
     <a href="kontakt.html">Kontakt</a>
     <a href="impressum.html">Impressum</a>
   </nav>
