@@ -42,6 +42,7 @@ h1{ margin:0 0 12px 0; color:var(--accent); }
 .chessboard{
   display:grid;
   grid-template-columns:repeat(8,1fr);
+  grid-template-rows:repeat(8,1fr);
   width:420px;
   aspect-ratio:1 / 1;
   border-radius:10px;
