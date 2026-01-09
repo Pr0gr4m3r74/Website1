@@ -141,9 +141,6 @@ function refreshLegalMoves(){
     return;
   }
   let moves = legalMoves(state, state.turn);
-  if (isInCheck(state, state.turn)){
-    moves = moves.filter(m => state.board[m.from.r][m.from.c].toLowerCase() === 'k');
-  }
   cachedLegal = moves;
 }
 
@@ -355,24 +352,24 @@ function generateKingMoves(state, color, r, c, moves){
   }
   // castling
   if (color === 'w' && r === 7 && c === 4){
-    if (state.castling.wK && !state.board[7][5] && !state.board[7][6]){
+    if (state.castling.wK && state.board[7][7] === 'R' && !state.board[7][5] && !state.board[7][6]){
       if (!isSquareAttacked(state.board, 'b', 7,4) && !isSquareAttacked(state.board, 'b', 7,5) && !isSquareAttacked(state.board, 'b', 7,6)){
         moves.push({ from:{r,c}, to:{r:7,c:6}, piece: state.board[r][c], castle:'K' });
       }
     }
-    if (state.castling.wQ && !state.board[7][1] && !state.board[7][2] && !state.board[7][3]){
+    if (state.castling.wQ && state.board[7][0] === 'R' && !state.board[7][1] && !state.board[7][2] && !state.board[7][3]){
       if (!isSquareAttacked(state.board, 'b', 7,4) && !isSquareAttacked(state.board, 'b', 7,3) && !isSquareAttacked(state.board, 'b', 7,2)){
         moves.push({ from:{r,c}, to:{r:7,c:2}, piece: state.board[r][c], castle:'Q' });
       }
     }
   }
   if (color === 'b' && r === 0 && c === 4){
-    if (state.castling.bK && !state.board[0][5] && !state.board[0][6]){
+    if (state.castling.bK && state.board[0][7] === 'r' && !state.board[0][5] && !state.board[0][6]){
       if (!isSquareAttacked(state.board, 'w', 0,4) && !isSquareAttacked(state.board, 'w', 0,5) && !isSquareAttacked(state.board, 'w', 0,6)){
         moves.push({ from:{r,c}, to:{r:0,c:6}, piece: state.board[r][c], castle:'K' });
       }
     }
-    if (state.castling.bQ && !state.board[0][1] && !state.board[0][2] && !state.board[0][3]){
+    if (state.castling.bQ && state.board[0][0] === 'r' && !state.board[0][1] && !state.board[0][2] && !state.board[0][3]){
       if (!isSquareAttacked(state.board, 'w', 0,4) && !isSquareAttacked(state.board, 'w', 0,3) && !isSquareAttacked(state.board, 'w', 0,2)){
         moves.push({ from:{r,c}, to:{r:0,c:2}, piece: state.board[r][c], castle:'Q' });
       }
@@ -617,7 +614,7 @@ function updateStatus(){
   } else if (!legal.length){
     message = inCheck ? `Schachmatt — ${(state.turn === 'w' ? 'Schwarz' : 'Weiß')} hat gewonnen.` : 'Patt — Unentschieden.';
   } else {
-    message = `Am Zug: ${state.turn === 'w' ? 'Weiß' : 'Schwarz'}${inCheck ? ' (Schach! König muss ziehen)' : ''}`;
+    message = `Am Zug: ${state.turn === 'w' ? 'Weiß' : 'Schwarz'}${inCheck ? ' (Schach!)' : ''}`;
   }
   statusEl.textContent = 'Status: ' + message;
   movesEl.innerHTML = state.moves.length ? `<strong>Alle Züge</strong><br>${state.moves.join('<br>')}` : 'Züge: —';
