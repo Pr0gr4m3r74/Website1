@@ -3,7 +3,7 @@
    ============================================= */
 
 const MAX_NEWS_EXCERPT_LENGTH = 170;
-const TRIMMED_NEWS_EXCERPT_LENGTH = 167;
+const TRIMMED_NEWS_EXCERPT_LENGTH = MAX_NEWS_EXCERPT_LENGTH - 3;
 
 const App = {
   /** Initialisiert die Anwendung */
