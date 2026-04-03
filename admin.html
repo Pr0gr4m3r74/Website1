@@ -39,8 +39,10 @@
     <div class="admin-login-box">
       <h2>🔐 Admin Login</h2>
       <p class="text-muted">Bitte Passwort eingeben, um fortzufahren.</p>
-      <input type="password" id="adminPassword" placeholder="Passwort" autocomplete="off" />
-      <button id="adminLoginBtn" style="width: 100%;">Anmelden</button>
+      <form id="adminLoginForm">
+        <input type="password" id="adminPassword" placeholder="Passwort" autocomplete="off" />
+        <button id="adminLoginBtn" type="submit" style="width: 100%;">Anmelden</button>
+      </form>
       <div id="loginError" class="error-msg"></div>
       <!-- Sicherheitshinweis -->
       <div class="security-notice" style="margin-top: var(--space-lg);">

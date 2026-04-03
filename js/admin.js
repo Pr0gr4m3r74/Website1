@@ -89,9 +89,13 @@ const AdminPanel = {
 
   /** Bindet alle Events */
   bindEvents() {
-    /* Login Button */
-    const loginBtn = document.getElementById('adminLoginBtn');
-    if (loginBtn) loginBtn.addEventListener('click', () => this.tryLogin());
+    const loginForm = document.getElementById('adminLoginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', e => {
+        e.preventDefault();
+        this.tryLogin();
+      });
+    }
     
     /* Enter-Taste im Passwort-Feld */
     const pwInput = document.getElementById('adminPassword');
