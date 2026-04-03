@@ -1,28 +1,28 @@
 :root{
-  --bg:#031022;
-  --panel:#0b2036;
-  --muted:#94a3b8;
-  --accent:#38bdf8;
-  color-scheme: dark;
+  --bg:var(--color-bg);
+  --panel:var(--color-surface);
+  --muted:var(--color-text-muted);
+  --accent:var(--color-accent);
+  color-scheme: inherit;
 }
 * { box-sizing: border-box; }
 body{
   margin:0;
   font-family: Arial, sans-serif;
   background: linear-gradient(180deg,#021022 0%, var(--bg) 100%);
-  color:#e5e7eb;
+  color:var(--color-text);
   min-height:100vh;
   display:flex;
   flex-direction:column;
 }
 header{
-  background:#020617;
+  background:var(--color-header);
   padding:16px 12px;
   text-align:center;
   box-shadow:0 2px 8px rgba(0,0,0,0.6);
 }
 nav a{ margin:0 12px; color:var(--accent); text-decoration:none; font-weight:600; }
-footer{ background:#020617; text-align:center; padding:14px; font-size:14px; color:var(--muted); margin-top:auto; }
+footer{ background:var(--color-header); text-align:center; padding:14px; font-size:14px; color:var(--muted); margin-top:auto; }
 
 .main-container{
   display:flex;
@@ -40,7 +40,7 @@ footer{ background:#020617; text-align:center; padding:14px; font-size:14px; col
   width:380px;
   background:
     radial-gradient(160px 100px at 50% 0%, rgba(255,255,255,0.03), transparent 16%),
-    linear-gradient(180deg,#07122a 0%, #0b2036 45%, #071224 100%);
+    linear-gradient(180deg,var(--color-surface) 0%, var(--panel) 45%, var(--color-surface-alt) 100%);
   padding:12px 20px 20px 20px;
   border-radius:18px;
   box-shadow:0 14px 40px rgba(2,6,23,0.75), inset 0 3px 14px rgba(255,255,255,0.02);
@@ -116,7 +116,7 @@ footer{ background:#020617; text-align:center; padding:14px; font-size:14px; col
   border-radius:12px;
   border:none;
   background: linear-gradient(180deg,#374151,#111827);
-  color:#e5e7eb;
+  color:#f8fafc;
   cursor:pointer;
   font-weight:900;
   font-size:16px;

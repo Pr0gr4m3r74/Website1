@@ -19,7 +19,7 @@ const AdminConfig = {
    * Für Produktivbetrieb unbedingt eine serverseitige
    * Authentifizierung verwenden.
    */
-  password: 'admin2026'
+  password: '1234'
 };
 
 const AdminPanel = {
@@ -30,6 +30,7 @@ const AdminPanel = {
 
   /** Initialisiert den Admin-Bereich */
   init() {
+    this.syncSectionFromHash();
     this.checkAuth();
     this.bindEvents();
   },
@@ -59,6 +60,7 @@ const AdminPanel = {
     const panel = document.getElementById('adminPanel');
     if (overlay) overlay.style.display = 'none';
     if (panel) panel.style.display = '';
+    this.updateActiveSection();
     this.renderSection(this.currentSection);
   },
 
@@ -87,9 +89,13 @@ const AdminPanel = {
 
   /** Bindet alle Events */
   bindEvents() {
-    /* Login Button */
-    const loginBtn = document.getElementById('adminLoginBtn');
-    if (loginBtn) loginBtn.addEventListener('click', () => this.tryLogin());
+    const loginForm = document.getElementById('adminLoginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', e => {
+        e.preventDefault();
+        this.tryLogin();
+      });
+    }
     
     /* Enter-Taste im Passwort-Feld */
     const pwInput = document.getElementById('adminPassword');
@@ -104,8 +110,8 @@ const AdminPanel = {
       btn.addEventListener('click', e => {
         e.preventDefault();
         this.currentSection = btn.dataset.adminSection;
-        document.querySelectorAll('[data-admin-section]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        window.location.hash = this.currentSection;
+        this.updateActiveSection();
         this.renderSection(this.currentSection);
       });
     });
@@ -113,6 +119,30 @@ const AdminPanel = {
     /* Logout Button */
     const logoutBtn = document.getElementById('adminLogout');
     if (logoutBtn) logoutBtn.addEventListener('click', () => this.logout());
+
+    window.addEventListener('hashchange', () => {
+      const previousSection = this.currentSection;
+      this.syncSectionFromHash();
+      if (previousSection !== this.currentSection && this.authenticated) {
+        this.updateActiveSection();
+        this.renderSection(this.currentSection);
+      }
+    });
+  },
+
+  /** Liest die gewünschte Admin-Sektion aus dem Hash */
+  syncSectionFromHash() {
+    const section = window.location.hash.replace('#', '').trim();
+    if (['announcements', 'games', 'projects'].includes(section)) {
+      this.currentSection = section;
+    }
+  },
+
+  /** Markiert den aktiven Menüpunkt */
+  updateActiveSection() {
+    document.querySelectorAll('[data-admin-section]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.adminSection === this.currentSection);
+    });
   },
 
   /** Rendert einen Admin-Bereich */

@@ -2,6 +2,9 @@
    App – Hauptlogik (Navigation, Rendering)
    ============================================= */
 
+const MAX_NEWS_EXCERPT_LENGTH = 170;
+const TRIMMED_NEWS_EXCERPT_LENGTH = MAX_NEWS_EXCERPT_LENGTH - 3;
+
 const App = {
   /** Initialisiert die Anwendung */
   init() {
@@ -66,19 +69,112 @@ const App = {
     /* News rendern */
     const newsContainer = document.getElementById('newsGrid');
     if (newsContainer) {
-      const announcements = SiteData.getAnnouncements();
-      const limit = newsContainer.dataset.limit ? parseInt(newsContainer.dataset.limit, 10) : announcements.length;
-      newsContainer.innerHTML = announcements.slice(0, limit).map(news => `
-        <article class="news-card">
-          <div class="news-date">
-            ${news.pinned ? '📌 ' : ''}${this.formatDate(news.date)}
-            ${news.category ? ` • <span class="tag">${this.escapeHtml(news.category)}</span>` : ''}
-          </div>
-          <h3>${this.escapeHtml(news.title)}</h3>
-          <p>${this.escapeHtml(news.content)}</p>
-        </article>
-      `).join('');
+      this.renderNewsContent(newsContainer);
     }
+  },
+
+  /** Rendert News-Liste oder Detailansicht */
+  renderNewsContent(newsContainer) {
+    const params = new URLSearchParams(window.location.search);
+    const announcementId = this.getCurrentPage() === 'news.html' ? params.get('announcement') : null;
+
+    if (announcementId) {
+      this.renderNewsDetail(newsContainer, announcementId, params.get('from'));
+      return;
+    }
+
+    const announcements = SiteData.getAnnouncements();
+    const limit = newsContainer.dataset.limit ? parseInt(newsContainer.dataset.limit, 10) : announcements.length;
+    newsContainer.innerHTML = announcements.slice(0, limit).map(news => `
+      <article class="news-card">
+        <div class="news-date">
+          ${news.pinned ? '📌 ' : ''}${this.formatDate(news.date)}
+          ${news.category ? ` • <span class="tag">${this.escapeHtml(news.category)}</span>` : ''}
+        </div>
+        <h3><a class="news-card-link" href="${this.buildAnnouncementHref(news.id)}">${this.escapeHtml(news.title)}</a></h3>
+        <p>${this.escapeHtml(this.getExcerpt(news.content))}</p>
+        <div class="news-card-actions">
+          <a class="news-read-more" href="${this.buildAnnouncementHref(news.id)}">Mehr lesen →</a>
+        </div>
+      </article>
+    `).join('');
+  },
+
+  /** Rendert eine News-Detailansicht */
+  renderNewsDetail(newsContainer, announcementId, from) {
+    const news = SiteData.getAnnouncementById(announcementId);
+    const backHref = this.getSafeBackTarget(from);
+    const titleEl = document.querySelector('.section-title');
+    const descEl = document.querySelector('.section-desc');
+
+    if (titleEl) titleEl.textContent = news ? `📢 ${news.title}` : '📢 News nicht gefunden';
+    if (descEl) {
+      descEl.textContent = news
+        ? `Veröffentlicht am ${this.formatDate(news.date)}${news.category ? ` • ${news.category}` : ''}`
+        : 'Die gewünschte Ankündigung konnte nicht geladen werden.';
+    }
+
+    newsContainer.innerHTML = news ? `
+      <article class="news-card news-detail-card">
+        <a class="back-link" href="${this.escapeHtml(backHref)}">← Zurück zur Übersicht</a>
+        <div class="news-date">
+          ${news.pinned ? '📌 ' : ''}${this.formatDate(news.date)}
+          ${news.category ? ` • <span class="tag">${this.escapeHtml(news.category)}</span>` : ''}
+        </div>
+        <h3>${this.escapeHtml(news.title)}</h3>
+        <p>${this.escapeHtml(news.content)}</p>
+      </article>
+    ` : `
+      <article class="news-card news-detail-card">
+        <a class="back-link" href="${this.escapeHtml(backHref)}">← Zurück zur Übersicht</a>
+        <h3>Ankündigung nicht gefunden</h3>
+        <p>Bitte gehe zurück zur Übersicht und öffne die Meldung erneut.</p>
+      </article>
+    `;
+  },
+
+  /** Baut den Detail-Link einer Ankündigung */
+  buildAnnouncementHref(id) {
+    const params = new URLSearchParams();
+    params.set('announcement', id);
+    params.set('from', this.getOverviewTarget());
+    return `news.html?${params.toString()}`;
+  },
+
+  /** Ermittelt das aktuelle Übersichts-Ziel */
+  getOverviewTarget() {
+    const page = this.getCurrentPage();
+    if (page === 'index.html') return 'index.html#newsGrid';
+    return 'news.html';
+  },
+
+  /** Normalisiert das Rücksprung-Ziel */
+  getSafeBackTarget(target) {
+    if (!target) return 'news.html';
+
+    try {
+      const url = new URL(target, window.location.href);
+      const page = url.pathname.split('/').pop() || 'news.html';
+      if (!['index.html', 'news.html'].includes(page) || url.origin !== window.location.origin) {
+        return 'news.html';
+      }
+      return `${page}${url.hash || ''}`;
+    } catch (e) {
+      return 'news.html';
+    }
+  },
+
+  /** Gibt den aktuellen Dateinamen zurück */
+  getCurrentPage() {
+    return window.location.pathname.split('/').pop() || 'index.html';
+  },
+
+  /** Kürzt Text für Kartenansichten */
+  getExcerpt(text) {
+    if (!text) return '';
+    const trimmed = text.trim();
+    if (trimmed.length <= MAX_NEWS_EXCERPT_LENGTH) return trimmed;
+    return `${trimmed.slice(0, TRIMMED_NEWS_EXCERPT_LENGTH).trimEnd()}…`;
   },
 
   /** Formatiert ein ISO-Datum ins deutsche Format */
