@@ -5,7 +5,7 @@
 const ThemeManager = {
   themes: ['dark', 'light', 'rainbow'],
   icons: { dark: '🌙', light: '☀️', rainbow: '🌈' },
-  labels: { dark: 'Dark Mode', light: 'White Mode', rainbow: 'Rainbow Mode' },
+  labels: { dark: 'Dark Mode', light: 'Light Mode', rainbow: 'Rainbow Mode' },
   current: 'dark',
   menuOpen: false,
 

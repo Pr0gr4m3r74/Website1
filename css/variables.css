@@ -12,9 +12,10 @@
   --color-overlay:       rgba(2, 6, 23, 0.72);
   --color-text:          #e5e7eb;
   --color-text-muted:    #c0cadb;
+  --color-text-muted-rgb: 192, 202, 219;
   --color-accent:        #38bdf8;
   --color-accent-hover:  #7dd3fc;
-  --color-border:        rgba(148, 163, 184, 0.22);
+  --color-border:        rgba(var(--color-text-muted-rgb), 0.22);
   --color-input-bg:      rgba(15, 23, 42, 0.7);
   --color-input-border:  rgba(148, 163, 184, 0.3);
   --color-shadow:        rgba(0, 0, 0, 0.55);

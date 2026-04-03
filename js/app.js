@@ -155,7 +155,10 @@ const App = {
 
   getExcerpt(text, maxLength) {
     if (!text || text.length <= maxLength) return text || '';
-    return text.slice(0, maxLength).trimEnd() + '…';
+    const slice = text.slice(0, maxLength + 1);
+    const lastSpace = slice.lastIndexOf(' ');
+    const excerpt = lastSpace > Math.floor(maxLength * 0.6) ? slice.slice(0, lastSpace) : slice.slice(0, maxLength);
+    return excerpt.trimEnd() + '…';
   },
 
   /** Formatiert ein ISO-Datum ins deutsche Format */
