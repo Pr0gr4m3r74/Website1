@@ -7,17 +7,17 @@
 :root {
   /* ── Farben ── */
   --color-bg:            #0f172a;
-  --color-bg-end:        #061327;
-  --color-surface:       #0b1a32;
-  --color-surface-alt:   #13233f;
+  --color-bg-end:        #081425;
+  --color-surface:       #12213d;
+  --color-surface-alt:   #1a2d4e;
   --color-header:        #020617;
-  --color-text:          #e5e7eb;
-  --color-text-muted:    #bfd0e2;
+  --color-text:          #f3f7fb;
+  --color-text-muted:    #d1deec;
   --color-accent:        #38bdf8;
   --color-accent-hover:  #7dd3fc;
-  --color-border:        rgba(255,255,255,0.12);
-  --color-input-bg:      rgba(255,255,255,0.08);
-  --color-input-border:  rgba(255,255,255,0.16);
+  --color-border:        rgba(255,255,255,0.18);
+  --color-input-bg:      rgba(255,255,255,0.1);
+  --color-input-border:  rgba(255,255,255,0.22);
   --color-shadow:        rgba(0,0,0,0.55);
   --color-btn-gradient-start: #06b6d4;
   --color-btn-gradient-end:   #0ea5e9;
@@ -25,9 +25,10 @@
   --color-danger-start:  #ef4444;
   --color-danger-end:    #f97316;
   --color-danger-text:   #fff7ed;
-  --color-tag-bg:        rgba(56,189,248,0.2);
+  --color-tag-bg:        rgba(56,189,248,0.24);
   --color-tag-text:      #d6f4ff;
   --color-card-shadow:   rgba(0,0,0,0.35);
+  --color-heading-shadow: rgba(2, 6, 23, 0.4);
 
   /* ── Typography ── */
   --font-family:  'Segoe UI', system-ui, -apple-system, sans-serif;

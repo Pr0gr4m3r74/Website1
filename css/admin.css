@@ -35,6 +35,7 @@
   font-size: var(--font-size-sm);
   margin-top: var(--space-sm);
   min-height: 1.5em;
+  font-weight: 700;
 }
 
 /* ── Admin Layout ── */
@@ -50,6 +51,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
+  box-shadow: 0 8px 24px var(--color-card-shadow);
 }
 .admin-sidebar h3 {
   font-size: var(--font-size-sm);
@@ -94,6 +96,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
+  box-shadow: 0 8px 24px var(--color-card-shadow);
 }
 
 /* ── Admin Table ── */
@@ -110,7 +113,7 @@
   font-size: var(--font-size-sm);
 }
 .admin-table th {
-  color: var(--color-text-muted);
+  color: var(--color-text);
   font-weight: 700;
   text-transform: uppercase;
   font-size: var(--font-size-xs);
@@ -161,13 +164,14 @@
 
 /* ── Security Notice ── */
 .security-notice {
-  background: rgba(234,179,8,0.08);
-  border: 1px solid rgba(234,179,8,0.2);
+  background: rgba(234,179,8,0.14);
+  border: 1px solid rgba(234,179,8,0.34);
   border-radius: var(--radius-md);
   padding: var(--space-md);
   margin-bottom: var(--space-lg);
   font-size: var(--font-size-sm);
-  color: #eab308;
+  color: #fde68a;
+  line-height: 1.7;
 }
 .security-notice strong {
   display: block;
