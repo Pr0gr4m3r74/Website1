@@ -3,6 +3,7 @@
    ============================================= */
 
 const App = {
+  MIN_EXCERPT_WORD_BOUNDARY_RATIO: 0.6,
   /** Initialisiert die Anwendung */
   init() {
     this.initNavigation();
@@ -157,7 +158,8 @@ const App = {
     if (!text || text.length <= maxLength) return text || '';
     const slice = text.slice(0, maxLength + 1);
     const lastSpace = slice.lastIndexOf(' ');
-    const excerpt = lastSpace > Math.floor(maxLength * 0.6) ? slice.slice(0, lastSpace) : slice.slice(0, maxLength);
+    const minBoundary = Math.floor(maxLength * this.MIN_EXCERPT_WORD_BOUNDARY_RATIO);
+    const excerpt = lastSpace > minBoundary ? slice.slice(0, lastSpace) : slice.slice(0, maxLength);
     return excerpt.trimEnd() + '…';
   },
 

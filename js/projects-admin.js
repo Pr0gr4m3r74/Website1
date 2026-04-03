@@ -80,6 +80,7 @@ const ProjectsAdmin = {
             <p class="text-muted">Mit Demo-Passwort <strong>1234</strong> anmelden, um Projekte hinzuzufügen, zu bearbeiten oder zu löschen.</p>
           </div>
           <div class="project-admin-login-row">
+            <label for="projectAdminPassword" class="sr-only">Demo-Passwort</label>
             <input type="password" id="projectAdminPassword" placeholder="Demo-Passwort" autocomplete="off" />
             <button type="submit" data-project-admin-action="login">Anmelden</button>
           </div>
@@ -102,7 +103,7 @@ const ProjectsAdmin = {
         <div class="project-admin-form-grid">
           <div class="form-group">
             <label for="projTitle">Titel</label>
-            <input type="text" id="projTitle" value="${project ? App.escapeHtml(project.title) : ''}" />
+            <input type="text" id="projTitle" value="${project ? App.escapeHtml(project.title) : ''}" required />
           </div>
           <div class="form-group">
             <label for="projStatus">Status</label>
