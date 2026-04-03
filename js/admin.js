@@ -143,18 +143,20 @@ const AdminPanel = {
           <tr><th>Datum</th><th>Titel</th><th>Kategorie</th><th>Angeheftet</th><th>Aktionen</th></tr>
         </thead>
         <tbody>
-          ${items.map(item => `
+          ${items.map(item => {
+            const safeId = App.escapeHtml(item.id);
+            return `
             <tr>
               <td>${App.escapeHtml(item.date)}</td>
               <td>${App.escapeHtml(item.title)}</td>
               <td><span class="tag">${App.escapeHtml(item.category || '-')}</span></td>
               <td>${item.pinned ? '📌' : '—'}</td>
               <td class="admin-actions">
-                <button onclick="AdminPanel.editAnnouncement('${item.id}')">✏️</button>
-                <button class="btn-danger" onclick="AdminPanel.deleteAnnouncement('${item.id}')">🗑️</button>
+                <button onclick="AdminPanel.editAnnouncement('${safeId}')">✏️</button>
+                <button class="btn-danger" onclick="AdminPanel.deleteAnnouncement('${safeId}')">🗑️</button>
               </td>
             </tr>
-          `).join('')}
+          `}).join('')}
         </tbody>
       </table>
     `;
@@ -164,6 +166,7 @@ const AdminPanel = {
     const area = document.getElementById('adminFormArea');
     if (!area) return;
     const isEdit = !!item;
+    const safeId = isEdit ? App.escapeHtml(item.id) : '';
     area.innerHTML = `
       <div class="admin-form" style="border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-lg); margin-bottom: var(--space-lg);">
         <h3>${isEdit ? 'Ankündigung bearbeiten' : 'Neue Ankündigung'}</h3>
@@ -174,7 +177,7 @@ const AdminPanel = {
         <div class="form-row">
           <div class="form-group">
             <label>Datum</label>
-            <input type="date" id="annDate" value="${isEdit ? item.date : new Date().toISOString().split('T')[0]}" />
+            <input type="date" id="annDate" value="${isEdit ? App.escapeHtml(item.date) : new Date().toISOString().split('T')[0]}" />
           </div>
           <div class="form-group">
             <label>Kategorie</label>
@@ -192,8 +195,8 @@ const AdminPanel = {
           </label>
         </div>
         <div style="display: flex; gap: var(--space-md);">
-          <button onclick="AdminPanel.previewAnnouncement('${isEdit ? item.id : ''}')">👁️ Vorschau</button>
-          <button onclick="AdminPanel.saveAnnouncement('${isEdit ? item.id : ''}')">💾 Speichern</button>
+          <button onclick="AdminPanel.previewAnnouncement('${safeId}')">👁️ Vorschau</button>
+          <button onclick="AdminPanel.saveAnnouncement('${safeId}')">💾 Speichern</button>
           <button class="btn-secondary" onclick="AdminPanel.renderSection('announcements')">Abbrechen</button>
         </div>
       </div>
@@ -205,19 +208,20 @@ const AdminPanel = {
     if (!data) return;
     const area = document.getElementById('previewArea');
     if (!area) return;
+    const escapedEditId = App.escapeHtml(editId);
     area.innerHTML = `
       <div class="preview-panel">
         <h3>📋 Vorschau</h3>
         <article class="news-card" style="max-width: 500px;">
           <div class="news-date">
-            ${data.pinned ? '📌 ' : ''}${App.formatDate(data.date)}
+            ${data.pinned ? '📌 ' : ''}${App.escapeHtml(App.formatDate(data.date))}
             ${data.category ? ` • <span class="tag">${App.escapeHtml(data.category)}</span>` : ''}
           </div>
           <h3 style="color: var(--color-accent);">${App.escapeHtml(data.title)}</h3>
           <p>${App.escapeHtml(data.content)}</p>
         </article>
         <div class="preview-actions">
-          <button onclick="AdminPanel.saveAnnouncement('${editId}')">✅ Bestätigen & Speichern</button>
+          <button onclick="AdminPanel.saveAnnouncement('${escapedEditId}')">✅ Bestätigen & Speichern</button>
           <button class="btn-secondary" onclick="document.getElementById('previewArea').innerHTML = ''">Vorschau schließen</button>
         </div>
       </div>
@@ -280,17 +284,19 @@ const AdminPanel = {
           <tr><th>Icon</th><th>Titel</th><th>URL</th><th>Aktionen</th></tr>
         </thead>
         <tbody>
-          ${SiteData.games.map(g => `
+          ${SiteData.games.map(g => {
+            const safeId = App.escapeHtml(g.id);
+            return `
             <tr>
-              <td>${g.icon}</td>
+              <td>${App.escapeHtml(g.icon)}</td>
               <td>${App.escapeHtml(g.title)}</td>
               <td>${App.escapeHtml(g.url)}</td>
               <td class="admin-actions">
-                <button onclick="AdminPanel.showGameForm(SiteData.games.find(x=>x.id==='${g.id}'))">✏️</button>
-                <button class="btn-danger" onclick="AdminPanel.deleteGameItem('${g.id}')">🗑️</button>
+                <button onclick="AdminPanel.showGameForm(SiteData.games.find(x=>x.id==='${safeId}'))">✏️</button>
+                <button class="btn-danger" onclick="AdminPanel.deleteGameItem('${safeId}')">🗑️</button>
               </td>
             </tr>
-          `).join('')}
+          `}).join('')}
         </tbody>
       </table>
     `;
@@ -300,6 +306,7 @@ const AdminPanel = {
     const area = document.getElementById('adminFormArea');
     if (!area) return;
     const isEdit = !!item;
+    const safeId = isEdit ? App.escapeHtml(item.id) : '';
     area.innerHTML = `
       <div class="admin-form" style="border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-lg); margin-bottom: var(--space-lg);">
         <h3>${isEdit ? 'Game bearbeiten' : 'Neues Game'}</h3>
@@ -310,7 +317,7 @@ const AdminPanel = {
           </div>
           <div class="form-group">
             <label>Icon (Emoji)</label>
-            <input type="text" id="gameIcon" value="${isEdit ? item.icon : ''}" />
+            <input type="text" id="gameIcon" value="${isEdit ? App.escapeHtml(item.icon) : ''}" />
           </div>
         </div>
         <div class="form-group">
@@ -324,7 +331,7 @@ const AdminPanel = {
           </div>
           <div class="form-group">
             <label>Tags (kommagetrennt)</label>
-            <input type="text" id="gameTags" value="${isEdit ? (item.tags || []).join(', ') : ''}" />
+            <input type="text" id="gameTags" value="${isEdit ? App.escapeHtml((item.tags || []).join(', ')) : ''}" />
           </div>
         </div>
         <div class="form-group">
@@ -334,7 +341,7 @@ const AdminPanel = {
           </label>
         </div>
         <div style="display: flex; gap: var(--space-md);">
-          <button onclick="AdminPanel.saveGame('${isEdit ? item.id : ''}')">💾 Speichern</button>
+          <button onclick="AdminPanel.saveGame('${safeId}')">💾 Speichern</button>
           <button class="btn-secondary" onclick="AdminPanel.renderSection('games')">Abbrechen</button>
         </div>
       </div>
@@ -386,17 +393,19 @@ const AdminPanel = {
           <tr><th>Titel</th><th>Status</th><th>Genre</th><th>Aktionen</th></tr>
         </thead>
         <tbody>
-          ${SiteData.projects.map(p => `
+          ${SiteData.projects.map(p => {
+            const safeId = App.escapeHtml(p.id);
+            return `
             <tr>
               <td>${App.escapeHtml(p.title)}</td>
               <td>${App.escapeHtml(p.status)}</td>
               <td>${App.escapeHtml(p.genre)}</td>
               <td class="admin-actions">
-                <button onclick="AdminPanel.showProjectForm(SiteData.projects.find(x=>x.id==='${p.id}'))">✏️</button>
-                <button class="btn-danger" onclick="AdminPanel.deleteProjectItem('${p.id}')">🗑️</button>
+                <button onclick="AdminPanel.showProjectForm(SiteData.projects.find(x=>x.id==='${safeId}'))">✏️</button>
+                <button class="btn-danger" onclick="AdminPanel.deleteProjectItem('${safeId}')">🗑️</button>
               </td>
             </tr>
-          `).join('')}
+          `}).join('')}
         </tbody>
       </table>
     `;
@@ -406,6 +415,7 @@ const AdminPanel = {
     const area = document.getElementById('adminFormArea');
     if (!area) return;
     const isEdit = !!item;
+    const safeId = isEdit ? App.escapeHtml(item.id) : '';
     area.innerHTML = `
       <div class="admin-form" style="border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-lg); margin-bottom: var(--space-lg);">
         <h3>${isEdit ? 'Projekt bearbeiten' : 'Neues Projekt'}</h3>
@@ -434,11 +444,11 @@ const AdminPanel = {
           </div>
           <div class="form-group">
             <label>Tags (kommagetrennt)</label>
-            <input type="text" id="projTags" value="${isEdit ? (item.tags || []).join(', ') : ''}" />
+            <input type="text" id="projTags" value="${isEdit ? App.escapeHtml((item.tags || []).join(', ')) : ''}" />
           </div>
         </div>
         <div style="display: flex; gap: var(--space-md);">
-          <button onclick="AdminPanel.saveProject('${isEdit ? item.id : ''}')">💾 Speichern</button>
+          <button onclick="AdminPanel.saveProject('${safeId}')">💾 Speichern</button>
           <button class="btn-secondary" onclick="AdminPanel.renderSection('projects')">Abbrechen</button>
         </div>
       </div>
