@@ -41,7 +41,7 @@ main{
   box-shadow:0 12px 32px var(--color-card-shadow);
 }
 h1{ margin:0 0 12px 0; color:var(--accent); }
-h2{ margin:0 0 16px 0; color:var(--color-text); }
+h2 { margin: 0 0 16px 0; color: var(--color-text); }
 .board-wrap{ display:flex; gap:20px; align-items:flex-start; justify-content:center; flex-wrap:wrap; }
 .chessboard{
   display:grid;
