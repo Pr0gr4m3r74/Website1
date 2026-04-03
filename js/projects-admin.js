@@ -1,5 +1,5 @@
 const ProjectsAdmin = {
-  password: '1234',
+  demoPassword: '1234',
   sessionKey: 'projects_admin_auth',
   editingId: null,
 
@@ -139,7 +139,7 @@ const ProjectsAdmin = {
     const input = document.getElementById('projectAdminPassword');
     if (!input) return;
 
-    if (input.value === this.password) {
+    if (input.value === this.demoPassword) {
       sessionStorage.setItem(this.sessionKey, 'true');
       this.editingId = null;
       this.updateToggle();
