@@ -32,14 +32,14 @@ const ProjectsAdmin = {
         const action = event.target.dataset.projectAdminAction;
         if (!action) return;
 
-        if (action === 'login') this.tryLogin();
         if (action === 'logout') this.logout();
-        if (action === 'save') this.save();
         if (action === 'cancel') this.cancelEdit();
       });
 
-      panel.addEventListener('keydown', event => {
-        if (event.key === 'Enter' && event.target.id === 'projectAdminPassword') this.tryLogin();
+      panel.addEventListener('submit', event => {
+        event.preventDefault();
+        if (this.isAuthenticated()) this.save();
+        else this.tryLogin();
       });
     }
 
@@ -74,24 +74,24 @@ const ProjectsAdmin = {
 
     if (!this.isAuthenticated()) {
       panel.innerHTML = `
-        <div class="project-admin-card">
+        <form class="project-admin-card">
           <div>
             <h3>Projekt-Login</h3>
             <p class="text-muted">Mit Demo-Passwort <strong>1234</strong> anmelden, um Projekte hinzuzufügen, zu bearbeiten oder zu löschen.</p>
           </div>
           <div class="project-admin-login-row">
             <input type="password" id="projectAdminPassword" placeholder="Demo-Passwort" autocomplete="off" />
-            <button type="button" data-project-admin-action="login">Anmelden</button>
+            <button type="submit" data-project-admin-action="login">Anmelden</button>
           </div>
           <div id="projectAdminMessage" class="project-admin-message"></div>
-        </div>
+        </form>
       `;
       return;
     }
 
     const project = this.editingId ? SiteData.projects.find(item => item.id === this.editingId) : null;
     panel.innerHTML = `
-      <div class="project-admin-card">
+      <form class="project-admin-card">
         <div class="project-admin-toolbar">
           <div>
             <h3>${project ? 'Projekt bearbeiten' : 'Neues Projekt'}</h3>
@@ -126,11 +126,11 @@ const ProjectsAdmin = {
           <input type="text" id="projTags" value="${project ? App.escapeHtml((project.tags || []).join(', ')) : ''}" placeholder="z.B. Demo, Frontend, Tool" />
         </div>
         <div class="project-admin-actions">
-          <button type="button" data-project-admin-action="save">${project ? 'Änderungen speichern' : 'Projekt hinzufügen'}</button>
+          <button type="submit" data-project-admin-action="save">${project ? 'Änderungen speichern' : 'Projekt hinzufügen'}</button>
           <button type="button" class="btn btn-ghost" data-project-admin-action="cancel">${project ? 'Bearbeitung abbrechen' : 'Felder leeren'}</button>
         </div>
         <div id="projectAdminMessage" class="project-admin-message"></div>
-      </div>
+      </form>
     `;
   },
 
