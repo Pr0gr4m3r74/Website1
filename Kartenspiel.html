@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Karten-Mini-Game</title>
+<title>Karten-Altar – IT Solutions</title>
+<link rel="stylesheet" href="css/variables.css">
 <link rel="stylesheet" href="kartenspiel.css">
 </head>
 <body>
 <header>
-  <h1>Karten-Mini-Game</h1>
+  <h1>🃏 Karten-Mini-Game</h1>
   <nav>
     <a href="index.html">Start</a>
     <a href="minigames.html" aria-current="page">Mini-Games</a>
     <a href="projects.html">Projekte</a>
+    <a href="news.html">News</a>
     <a href="kontakt.html">Kontakt</a>
     <a href="impressum.html">Impressum</a>
   </nav>
@@ -41,8 +43,10 @@
   </div>
 </div>
 
-<footer>© 2026 IT Solutions</footer>
+<footer>© 2026 IT Solutions · <a href="minigames.html" style="color: var(--muted);">← Zurück zu Mini-Games</a></footer>
 
+<script src="js/theme-manager.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => ThemeManager.init());</script>
 <script>
 /* Daten & Mapping */
 const rarities = [
