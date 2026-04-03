@@ -1,0 +1,188 @@
+/* =============================================
+   Admin Panel Styles
+   ============================================= */
+
+/* ── Login Overlay ── */
+.admin-login-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+}
+.admin-login-box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.admin-login-box h2 {
+  margin-bottom: var(--space-lg);
+}
+.admin-login-box input {
+  text-align: center;
+  font-size: var(--font-size-lg);
+}
+.admin-login-box .error-msg {
+  color: var(--color-danger-start);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-sm);
+  min-height: 1.5em;
+}
+
+/* ── Admin Layout ── */
+.admin-container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-lg);
+  min-height: calc(100vh - 200px);
+}
+
+.admin-sidebar {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+.admin-sidebar h3 {
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+.admin-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+.admin-nav li a,
+.admin-nav li button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  background: none;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.admin-nav li a:hover,
+.admin-nav li button:hover,
+.admin-nav li a.active,
+.admin-nav li button.active {
+  background: rgba(56,189,248,0.08);
+  color: var(--color-accent);
+  transform: none;
+}
+
+.admin-content {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+/* ── Admin Table ── */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-md);
+}
+.admin-table th,
+.admin-table td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
+.admin-table th {
+  color: var(--color-text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.05em;
+}
+.admin-table tr:hover td {
+  background: rgba(56,189,248,0.03);
+}
+.admin-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+.admin-actions button {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-size-xs);
+}
+
+/* ── Admin Form ── */
+.admin-form {
+  max-width: 700px;
+}
+.admin-form .form-group {
+  margin-bottom: var(--space-md);
+}
+.admin-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+/* ── Preview Panel ── */
+.preview-panel {
+  background: var(--color-surface);
+  border: 2px dashed var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+.preview-panel h3 {
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+}
+.preview-actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+/* ── Security Notice ── */
+.security-notice {
+  background: rgba(234,179,8,0.08);
+  border: 1px solid rgba(234,179,8,0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  font-size: var(--font-size-sm);
+  color: #eab308;
+}
+.security-notice strong {
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+/* ── Responsive Admin ── */
+@media (max-width: 768px) {
+  .admin-container {
+    grid-template-columns: 1fr;
+  }
+  .admin-sidebar {
+    order: -1;
+  }
+  .admin-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}

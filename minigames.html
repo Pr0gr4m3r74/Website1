@@ -1,49 +1,59 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Mini-Games Übersicht</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini-Games – IT Solutions</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/themes.css" />
 </head>
-<body class="minigames">
-<header>
-  <h1>Mini-Games</h1>
-  <nav>
-    <a href="index.html">Start</a>
-    <a href="minigames.html" aria-current="page">Mini-Games</a>
-    <a href="projects.html">Projekte</a>
-    <a href="kontakt.html">Kontakt</a>
-    <a href="impressum.html">Impressum</a>
-  </nav>
-</header>
+<body>
 
-<main>
-  <p>Wähle ein Mini-Game, um zu spielen. Neue Spiele kannst du hier ergänzen — einfach weitere Tiles hinzufügen.</p>
-
-  <div class="grid">
-    <div class="game-tile">
-      <div class="tile-title">Karten-Altar</div>
-      <div class="tile-desc">Ziehe Karten, lege sie in den Altar und opfere Kombinationen für Belohnungen. Das bestehende Karten-Mini-Game.</div>
-      <a class="play-btn" href="Kartenspiel.html" aria-label="Karten-Altar öffnen">Spiel starten</a>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">IT Solutions</a>
+      <nav class="nav-links">
+        <a href="index.html">Start</a>
+        <a href="minigames.html" aria-current="page">Mini‑Games</a>
+        <a href="projects.html">Projekte</a>
+        <a href="news.html">News</a>
+        <a href="kontakt.html">Kontakt</a>
+        <a href="impressum.html">Impressum</a>
+      </nav>
+      <div class="header-controls">
+        <button id="themeToggle" class="theme-btn" aria-label="Theme wechseln">🌙</button>
+        <button class="nav-toggle" aria-label="Menü öffnen">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <div class="game-tile">
-      <div class="tile-title">Münzwurf</div>
-      <div class="tile-desc">Ein schnelles Spiel: Wirf eine Münze und sammle Kopf-/Zahl-Statistiken. Perfekt als kurzes Mini-Game.</div>
-      <a class="play-btn" href="minigame-coinflip.html" aria-label="Münzwurf öffnen">Spiel starten</a>
+  <!-- Main Content -->
+  <main class="site-main">
+    <section class="section">
+      <h2 class="section-title">🎮 Mini-Games</h2>
+      <p class="section-desc">Wähle ein Mini-Game, um zu spielen. Neue Spiele werden automatisch hinzugefügt.</p>
+      <div id="gamesGrid" class="card-grid"></div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>© 2026 IT Solutions</p>
+    <div>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="impressum.html">Impressum</a>
     </div>
+  </footer>
 
-    <div class="game-tile">
-      <div class="tile-title">Schach</div>
-      <div class="tile-desc">Spiele Schach gegen einen simplen Computergegner. Die Züge werden geloggt – perfekt zum schnellen Taktik-Check.</div>
-      <a class="play-btn" href="minigame-chess.html" aria-label="Schach öffnen">Spiel starten</a>
-    </div>
-
-    <!-- Platz für zusätzliche Mini-Games -->
-  </div>
-</main>
-
-<footer>© 2026 IT Solutions</footer>
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/theme-manager.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

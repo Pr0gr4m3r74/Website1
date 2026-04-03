@@ -1,0 +1,218 @@
+/* =============================================
+   Components – Karten, Tiles, Panels, Badges
+   ============================================= */
+
+/* ── Content Card ── */
+.content-card {
+  background: linear-gradient(180deg, var(--color-surface-alt), rgba(0,0,0,0.06));
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 24px var(--color-card-shadow);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.content-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px var(--color-card-shadow);
+}
+.content-card h3 {
+  margin-top: 0;
+  color: var(--color-accent);
+}
+
+/* ── Game Tile ── */
+.game-tile {
+  background: linear-gradient(180deg, var(--color-surface-alt), rgba(0,0,0,0.06));
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+.game-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(56,189,248,0.08);
+}
+.tile-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm);
+}
+.tile-title {
+  font-weight: 800;
+  color: var(--color-accent);
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-lg);
+}
+.tile-desc {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-sm);
+  flex: 1;
+}
+.play-btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  background: linear-gradient(180deg, var(--color-btn-gradient-start), var(--color-btn-gradient-end));
+  color: var(--color-btn-text);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  text-align: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--color-shadow);
+  color: var(--color-btn-text);
+}
+
+/* ── Project Card ── */
+.project-card {
+  background: linear-gradient(180deg, var(--color-surface-alt), rgba(0,0,0,0.06));
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 8px 24px var(--color-card-shadow);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px var(--color-card-shadow);
+}
+.project-card h3 { margin-top: 0; color: var(--color-accent); }
+.project-meta {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-sm);
+}
+
+/* ── News / Announcement Card ── */
+.news-card {
+  background: linear-gradient(180deg, var(--color-surface-alt), rgba(0,0,0,0.06));
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 6px 20px var(--color-card-shadow);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.news-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px var(--color-card-shadow);
+}
+.news-card .news-date {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-sm);
+}
+.news-card h3 {
+  margin: 0 0 var(--space-sm) 0;
+  font-size: var(--font-size-lg);
+}
+.news-card p {
+  font-size: var(--font-size-sm);
+}
+.news-card .news-tags {
+  margin-top: var(--space-sm);
+}
+
+/* ── Hero Section ── */
+.hero {
+  text-align: center;
+  padding: var(--space-2xl) 0;
+}
+.hero h2 {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-md);
+}
+.hero p {
+  max-width: 600px;
+  margin: 0 auto var(--space-lg) auto;
+  font-size: var(--font-size-lg);
+}
+.hero-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Stats Row ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-xl) 0;
+}
+.stat-item {
+  text-align: center;
+  padding: var(--space-lg);
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+.stat-number {
+  font-size: var(--font-size-3xl);
+  font-weight: 900;
+  color: var(--color-accent);
+  display: block;
+}
+.stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* ── Contact Form ── */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.contact-form label {
+  margin-bottom: var(--space-xs);
+}
+.contact-form button {
+  width: 100%;
+  padding: var(--space-md);
+  font-size: var(--font-size-base);
+}
+
+/* ── Badge ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  background: rgba(56,189,248,0.15);
+  color: var(--color-accent);
+}
+.badge-new {
+  background: rgba(34,197,94,0.15);
+  color: #22c55e;
+}
+
+/* ── Divider ── */
+.divider {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--space-xl) 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero { padding: var(--space-xl) 0; }
+  .hero h2 { font-size: var(--font-size-2xl); }
+  .hero p { font-size: var(--font-size-base); }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; align-items: center; }
+}

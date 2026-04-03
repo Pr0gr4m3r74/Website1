@@ -1,0 +1,217 @@
+/* =============================================
+   Layout – Header, Navigation, Footer, Main
+   ============================================= */
+
+/* ── Header ── */
+.site-header {
+  background: var(--color-header);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: 0 2px 8px var(--color-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.site-logo {
+  font-size: var(--font-size-xl);
+  font-weight: 900;
+  color: var(--color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+  margin: 0;
+}
+.site-logo:hover { color: var(--color-accent-hover); }
+
+/* ── Navigation ── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  list-style: none;
+}
+
+.nav-links a {
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+  white-space: nowrap;
+}
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--color-accent);
+  background: rgba(56,189,248,0.08);
+}
+
+/* ── Hamburger Menu (Mobile) ── */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  padding: var(--space-sm);
+  color: var(--color-text);
+}
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-text);
+  margin: 5px 0;
+  border-radius: 2px;
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+.nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ── Header Controls (Theme Switcher) ── */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.theme-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  transition: background var(--transition-fast), color var(--transition-fast);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+.theme-btn:hover {
+  background: var(--color-surface-alt);
+  color: var(--color-accent);
+  transform: none;
+}
+
+/* ── Main Content ── */
+.site-main {
+  flex: 1;
+  padding: var(--space-xl) var(--space-lg);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ── Footer ── */
+.site-footer {
+  background: var(--color-header);
+  text-align: center;
+  padding: var(--space-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: auto;
+}
+.site-footer a {
+  color: var(--color-text-muted);
+  margin: 0 var(--space-sm);
+}
+.site-footer a:hover { color: var(--color-accent); }
+
+/* ── Section ── */
+.section {
+  margin-bottom: var(--space-2xl);
+}
+.section-title {
+  margin-bottom: var(--space-lg);
+}
+.section-desc {
+  margin-bottom: var(--space-lg);
+  max-width: 700px;
+}
+
+/* ── Grid Layouts ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+/* ── Responsive ── */
+
+/* Tablet & below */
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-header);
+    padding: var(--space-md);
+    box-shadow: 0 4px 12px var(--color-shadow);
+    z-index: 99;
+  }
+  .nav-links.open { display: flex; }
+
+  .nav-links a {
+    padding: var(--space-md);
+    width: 100%;
+    text-align: center;
+    border-radius: var(--radius-sm);
+  }
+
+  .site-header { position: relative; }
+
+  .site-main {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .site-main {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  h1 { font-size: var(--font-size-2xl); }
+  h2 { font-size: var(--font-size-xl); }
+
+  .header-inner {
+    padding: 0 var(--space-sm);
+  }
+}
+
+/* Large displays */
+@media (min-width: 1400px) {
+  :root {
+    --max-width: 1280px;
+  }
+}
+
+@media (min-width: 1800px) {
+  :root {
+    --max-width: 1400px;
+    --font-size-base: 1.0625rem;
+  }
+}
