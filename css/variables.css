@@ -12,7 +12,7 @@
   --color-overlay:       rgba(2, 6, 23, 0.72);
   --color-text:          #e5e7eb;
   --color-text-muted:    #c0cadb;
-  /* RGB-Wert separat für Alpha-Varianten wie Rahmen und Overlays */
+  /* Separate RGB value for alpha-based borders and overlays */
   --color-text-muted-rgb: 192, 202, 219;
   --color-accent:        #38bdf8;
   --color-accent-hover:  #7dd3fc;
