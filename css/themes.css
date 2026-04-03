@@ -27,6 +27,9 @@
   --color-btn-gradient-start: #0369a1;
   --color-btn-gradient-end:   #0284c7;
   --color-btn-text:      #ffffff;
+  --color-warning-bg:    rgba(245,158,11,0.14);
+  --color-warning-border: rgba(217,119,6,0.28);
+  --color-warning-text:  #92400e;
   --color-tag-bg:        rgba(3,105,161,0.16);
   --color-tag-text:      #0c4a6e;
   --color-card-shadow:   rgba(15,23,42,0.08);
@@ -52,6 +55,9 @@
   --color-btn-gradient-start: #ec4899;
   --color-btn-gradient-end:   #a855f7;
   --color-btn-text:      #ffffff;
+  --color-warning-bg:    rgba(234,179,8,0.16);
+  --color-warning-border: rgba(250,204,21,0.36);
+  --color-warning-text:  #fde68a;
   --color-tag-bg:        rgba(168,85,247,0.28);
   --color-tag-text:      #f3e8ff;
   --color-card-shadow:   rgba(0,0,0,0.4);

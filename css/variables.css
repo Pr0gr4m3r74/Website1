@@ -25,6 +25,9 @@
   --color-danger-start:  #ef4444;
   --color-danger-end:    #f97316;
   --color-danger-text:   #fff7ed;
+  --color-warning-bg:    rgba(234,179,8,0.14);
+  --color-warning-border: rgba(234,179,8,0.34);
+  --color-warning-text:  #fde68a;
   --color-tag-bg:        rgba(56,189,248,0.24);
   --color-tag-text:      #d6f4ff;
   --color-card-shadow:   rgba(0,0,0,0.35);
