@@ -2,6 +2,9 @@
    App – Hauptlogik (Navigation, Rendering)
    ============================================= */
 
+const MAX_NEWS_EXCERPT_LENGTH = 170;
+const TRIMMED_NEWS_EXCERPT_LENGTH = 167;
+
 const App = {
   /** Initialisiert die Anwendung */
   init() {
@@ -170,8 +173,8 @@ const App = {
   getExcerpt(text) {
     if (!text) return '';
     const trimmed = text.trim();
-    if (trimmed.length <= 170) return trimmed;
-    return `${trimmed.slice(0, 167).trimEnd()}…`;
+    if (trimmed.length <= MAX_NEWS_EXCERPT_LENGTH) return trimmed;
+    return `${trimmed.slice(0, TRIMMED_NEWS_EXCERPT_LENGTH).trimEnd()}…`;
   },
 
   /** Formatiert ein ISO-Datum ins deutsche Format */
