@@ -2,14 +2,14 @@
    Layout – Header, Navigation, Footer, Main
    ============================================= */
 
-/* ── Header ── */
 .site-header {
   background: var(--color-header);
   padding: var(--space-md) var(--space-lg);
-  box-shadow: 0 2px 8px var(--color-shadow);
+  box-shadow: 0 8px 24px var(--color-shadow);
   position: sticky;
   top: 0;
   z-index: 100;
+  backdrop-filter: blur(10px);
 }
 
 .header-inner {
@@ -29,9 +29,9 @@
   white-space: nowrap;
   margin: 0;
 }
+
 .site-logo:hover { color: var(--color-accent-hover); }
 
-/* ── Navigation ── */
 .nav-links {
   display: flex;
   align-items: center;
@@ -45,16 +45,15 @@
   font-weight: 600;
   font-size: var(--font-size-sm);
   border-radius: var(--radius-sm);
-  transition: color var(--transition-fast), background var(--transition-fast);
   white-space: nowrap;
 }
+
 .nav-links a:hover,
 .nav-links a[aria-current="page"] {
   color: var(--color-accent);
-  background: rgba(56,189,248,0.08);
+  background: rgba(56, 189, 248, 0.12);
 }
 
-/* ── Hamburger Menu (Mobile) ── */
 .nav-toggle {
   display: none;
   background: none;
@@ -64,6 +63,7 @@
   padding: var(--space-sm);
   color: var(--color-text);
 }
+
 .nav-toggle span {
   display: block;
   width: 24px;
@@ -73,19 +73,24 @@
   border-radius: 2px;
   transition: transform var(--transition-normal), opacity var(--transition-normal);
 }
+
 .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .nav-toggle.active span:nth-child(2) { opacity: 0; }
 .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* ── Header Controls (Theme Switcher) ── */
 .header-controls {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
 }
 
-.theme-btn {
-  background: none;
+.theme-switcher {
+  position: relative;
+}
+
+.theme-btn,
+.icon-btn {
+  background: transparent;
   border: 1px solid var(--color-border);
   box-shadow: none;
   padding: var(--space-sm);
@@ -93,21 +98,52 @@
   cursor: pointer;
   font-size: var(--font-size-lg);
   color: var(--color-text);
-  transition: background var(--transition-fast), color var(--transition-fast);
   line-height: 1;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
 }
-.theme-btn:hover {
+
+.theme-btn:hover,
+.icon-btn:hover {
   background: var(--color-surface-alt);
   color: var(--color-accent);
   transform: none;
 }
 
-/* ── Main Content ── */
+.theme-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  min-width: 190px;
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: 0 16px 40px var(--color-shadow);
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.theme-menu-item {
+  width: 100%;
+  justify-content: flex-start;
+  background: transparent;
+  color: var(--color-text);
+  box-shadow: none;
+  border: 1px solid transparent;
+}
+
+.theme-menu-item:hover,
+.theme-menu-item.active {
+  background: var(--color-surface-alt);
+  border-color: var(--color-border);
+  color: var(--color-accent);
+  transform: none;
+}
+
 .site-main {
   flex: 1;
   padding: var(--space-xl) var(--space-lg);
@@ -116,7 +152,6 @@
   margin: 0 auto;
 }
 
-/* ── Footer ── */
 .site-footer {
   background: var(--color-header);
   text-align: center;
@@ -125,34 +160,58 @@
   color: var(--color-text-muted);
   margin-top: auto;
 }
+
 .site-footer a {
   color: var(--color-text-muted);
   margin: 0 var(--space-sm);
 }
+
 .site-footer a:hover { color: var(--color-accent); }
 
-/* ── Section ── */
 .section {
   margin-bottom: var(--space-2xl);
 }
+
 .section-title {
   margin-bottom: var(--space-lg);
 }
+
 .section-desc {
   margin-bottom: var(--space-lg);
   max-width: 700px;
 }
 
-/* ── Grid Layouts ── */
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.section-heading .section-title,
+.section-heading .section-desc {
+  margin-bottom: 0;
+}
+
+.section-heading-copy {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.section-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-lg);
 }
 
-/* ── Responsive ── */
-
-/* Tablet & below */
 @media (max-width: 768px) {
   .nav-toggle { display: block; }
 
@@ -168,6 +227,7 @@
     box-shadow: 0 4px 12px var(--color-shadow);
     z-index: 99;
   }
+
   .nav-links.open { display: flex; }
 
   .nav-links a {
@@ -186,9 +246,17 @@
   .card-grid {
     grid-template-columns: 1fr;
   }
+
+  .section-heading {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .section-actions {
+    justify-content: flex-end;
+  }
 }
 
-/* Small mobile */
 @media (max-width: 480px) {
   .site-main {
     padding: var(--space-md) var(--space-sm);
@@ -200,9 +268,12 @@
   .header-inner {
     padding: 0 var(--space-sm);
   }
+
+  .theme-menu {
+    min-width: 170px;
+  }
 }
 
-/* Large displays */
 @media (min-width: 1400px) {
   :root {
     --max-width: 1280px;

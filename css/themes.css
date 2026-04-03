@@ -1,69 +1,68 @@
 /* =============================================
    Themes – Dark (default), Light, Rainbow
-   Neue Themes: einfach [data-theme="name"] Block
-   hinzufügen und die CSS-Variablen überschreiben.
    ============================================= */
 
-/* ── Dark Mode (Standard – Variablen in variables.css) ── */
 [data-theme="dark"] {
   color-scheme: dark;
 }
 
-/* ── Light Mode ── */
 [data-theme="light"] {
-  --color-bg:            #f1f5f9;
-  --color-bg-end:        #e2e8f0;
+  --color-bg:            #eef2f7;
+  --color-bg-end:        #dde5ef;
   --color-surface:       #ffffff;
-  --color-surface-alt:   rgba(0,0,0,0.02);
-  --color-header:        #ffffff;
-  --color-text:          #1e293b;
-  --color-text-muted:    #64748b;
+  --color-surface-alt:   #f8fafc;
+  --color-surface-soft:  rgba(255, 255, 255, 0.92);
+  --color-header:        rgba(255, 255, 255, 0.95);
+  --color-overlay:       rgba(226, 232, 240, 0.78);
+  --color-text:          #0f172a;
+  --color-text-muted:    #475569;
   --color-accent:        #0284c7;
   --color-accent-hover:  #0369a1;
-  --color-border:        rgba(0,0,0,0.08);
-  --color-input-bg:      rgba(0,0,0,0.03);
-  --color-input-border:  rgba(0,0,0,0.12);
-  --color-shadow:        rgba(0,0,0,0.08);
+  --color-border:        rgba(15, 23, 42, 0.12);
+  --color-input-bg:      rgba(255, 255, 255, 0.94);
+  --color-input-border:  rgba(15, 23, 42, 0.14);
+  --color-shadow:        rgba(15, 23, 42, 0.1);
   --color-btn-gradient-start: #0284c7;
   --color-btn-gradient-end:   #0ea5e9;
   --color-btn-text:      #ffffff;
-  --color-tag-bg:        rgba(2,132,199,0.1);
-  --color-tag-text:      #0284c7;
-  --color-card-shadow:   rgba(0,0,0,0.06);
+  --color-tag-bg:        rgba(2, 132, 199, 0.12);
+  --color-tag-text:      #075985;
+  --color-card-shadow:   rgba(15, 23, 42, 0.08);
   color-scheme: light;
 }
 
-/* ── Rainbow Mode ── */
 [data-theme="rainbow"] {
-  --color-bg:            #0f0a1e;
-  --color-bg-end:        #1a0530;
-  --color-surface:       #1e1035;
-  --color-surface-alt:   rgba(255,255,255,0.03);
-  --color-header:        #0d0820;
-  --color-text:          #f0e6ff;
-  --color-text-muted:    #b8a9d4;
-  --color-accent:        #a855f7;
-  --color-accent-hover:  #c084fc;
-  --color-border:        rgba(168,85,247,0.15);
-  --color-input-bg:      rgba(255,255,255,0.04);
-  --color-input-border:  rgba(168,85,247,0.2);
-  --color-shadow:        rgba(0,0,0,0.5);
+  --color-bg:            #130720;
+  --color-bg-end:        #220938;
+  --color-surface:       #1d1035;
+  --color-surface-alt:   #2a1649;
+  --color-surface-soft:  rgba(42, 22, 73, 0.9);
+  --color-header:        rgba(13, 8, 32, 0.94);
+  --color-overlay:       rgba(13, 8, 32, 0.8);
+  --color-text:          #f5ebff;
+  --color-text-muted:    #d8c6f1;
+  --color-accent:        #c084fc;
+  --color-accent-hover:  #e879f9;
+  --color-border:        rgba(192, 132, 252, 0.22);
+  --color-input-bg:      rgba(255, 255, 255, 0.06);
+  --color-input-border:  rgba(192, 132, 252, 0.28);
+  --color-shadow:        rgba(0, 0, 0, 0.5);
   --color-btn-gradient-start: #ec4899;
   --color-btn-gradient-end:   #a855f7;
   --color-btn-text:      #ffffff;
-  --color-tag-bg:        rgba(168,85,247,0.15);
-  --color-tag-text:      #c084fc;
-  --color-card-shadow:   rgba(0,0,0,0.4);
+  --color-tag-bg:        rgba(192, 132, 252, 0.16);
+  --color-tag-text:      #f5d0fe;
+  --color-card-shadow:   rgba(0, 0, 0, 0.36);
   color-scheme: dark;
 }
 
-/* Rainbow-spezifische Akzente */
 [data-theme="rainbow"] .site-logo {
   background: linear-gradient(90deg, #ec4899, #a855f7, #6366f1, #38bdf8, #22c55e, #eab308);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 [data-theme="rainbow"] h1,
 [data-theme="rainbow"] h2 {
   background: linear-gradient(135deg, #ec4899, #a855f7, #38bdf8);
@@ -71,23 +70,13 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 [data-theme="rainbow"] .nav-links a:hover,
 [data-theme="rainbow"] .nav-links a[aria-current="page"] {
-  background: linear-gradient(135deg, rgba(236,72,153,0.1), rgba(168,85,247,0.1));
-  color: #c084fc;
-}
-[data-theme="rainbow"] .play-btn,
-[data-theme="rainbow"] .btn {
-  background: linear-gradient(135deg, #ec4899, #a855f7);
-}
-[data-theme="rainbow"] .content-card:hover,
-[data-theme="rainbow"] .game-tile:hover,
-[data-theme="rainbow"] .project-card:hover,
-[data-theme="rainbow"] .news-card:hover {
-  box-shadow: 0 12px 32px rgba(168,85,247,0.15);
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.14), rgba(168, 85, 247, 0.14));
+  color: #f5d0fe;
 }
 
-/* Light mode header shadow */
 [data-theme="light"] .site-header {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
 }

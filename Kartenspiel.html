@@ -1,53 +1,87 @@
 <!DOCTYPE html>
 <html lang="de" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Karten-Altar – IT Solutions</title>
-<link rel="stylesheet" href="css/variables.css">
-<link rel="stylesheet" href="kartenspiel.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karten-Altar – IT Solutions</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="kartenspiel.css">
 </head>
 <body>
-<header>
-  <h1>🃏 Karten-Mini-Game</h1>
-  <nav>
-    <a href="index.html">Start</a>
-    <a href="minigames.html" aria-current="page">Mini-Games</a>
-    <a href="projects.html">Projekte</a>
-    <a href="news.html">News</a>
-    <a href="kontakt.html">Kontakt</a>
-    <a href="impressum.html">Impressum</a>
-  </nav>
-</header>
-
-<div class="main-container">
-  <div id="altar">
-    <h3>Altar</h3>
-    <div id="altar-slots">
-      <div class="altar-slot" data-index="0"></div>
-      <div class="altar-slot" data-index="1"></div>
-      <div class="altar-slot" data-index="2"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">IT Solutions</a>
+      <nav class="nav-links">
+        <a href="index.html">Start</a>
+        <a href="minigames.html" aria-current="page">Mini-Games</a>
+        <a href="projects.html">Projekte</a>
+        <a href="news.html">News</a>
+        <a href="kontakt.html">Kontakt</a>
+        <a href="impressum.html">Impressum</a>
+      </nav>
+      <div class="header-controls">
+        <button id="themeToggle" class="theme-btn" aria-label="Theme wechseln">🌙</button>
+        <button class="nav-toggle" aria-label="Menü öffnen">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
-    <button id="sacrificeBtn">Opfern & Belohnung</button>
-    <div id="altar-result"></div>
-  </div>
+  </header>
 
-  <div class="game-area">
-    <div class="game-controls">
-      <button id="drawBtn">Karte ziehen</button>
-      <div id="currentCard"></div>
+  <main class="site-main altar-page">
+    <section class="section">
+      <div class="section-heading">
+        <div class="section-heading-copy">
+          <h1 class="section-title">🃏 Karten-Altar</h1>
+          <p class="section-desc">Ziehe Karten, verschiebe sie per Drag & Drop auf den Altar und teste Kombinationen in einem besser eingebetteten Layout.</p>
+        </div>
+        <div class="section-actions">
+          <a href="minigames.html" class="btn btn-ghost">← Zurück zu Mini-Games</a>
+        </div>
+      </div>
+
+      <section class="altar-shell content-card">
+        <div class="main-container">
+          <div id="altar">
+            <h3>Altar</h3>
+            <div id="altar-slots">
+              <div class="altar-slot" data-index="0"></div>
+              <div class="altar-slot" data-index="1"></div>
+              <div class="altar-slot" data-index="2"></div>
+            </div>
+            <button id="sacrificeBtn">Opfern & Belohnung</button>
+            <div id="altar-result"></div>
+          </div>
+
+          <div class="game-area">
+            <div class="game-controls">
+              <button id="drawBtn">Karte ziehen</button>
+              <div id="currentCard"></div>
+            </div>
+
+            <h2>Inventar</h2>
+            <div id="inventory" class="inventory" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 IT Solutions</p>
+    <div>
+      <a href="minigames.html">Zurück zu Mini-Games</a>
     </div>
+  </footer>
 
-    <h2>Inventar</h2>
-    <div id="inventory" class="inventory" aria-live="polite"></div>
-  </div>
-</div>
-
-<footer>© 2026 IT Solutions · <a href="minigames.html" style="color: var(--muted);">← Zurück zu Mini-Games</a></footer>
-
-<script src="js/theme-manager.js"></script>
-<script>document.addEventListener('DOMContentLoaded', () => ThemeManager.init());</script>
-<script>
+  <script src="js/data.js"></script>
+  <script src="js/theme-manager.js"></script>
+  <script src="js/app.js"></script>
+  <script>
 /* Daten & Mapping */
 const rarities = [
   { name: 'Gewöhnlich', chance: 70 },
@@ -360,6 +394,6 @@ document.getElementById('sacrificeBtn').addEventListener('click', summonFromAlta
 (function initDemo(){
   for (let i=0;i<4;i++) drawCard();
 })();
-</script>
+  </script>
 </body>
 </html>

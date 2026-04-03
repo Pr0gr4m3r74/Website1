@@ -1,55 +1,87 @@
 <!DOCTYPE html>
 <html lang="de" data-theme="dark">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Schach – IT Solutions</title>
-<link rel="stylesheet" href="css/variables.css" />
-<link rel="stylesheet" href="chess.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Schach – IT Solutions</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/themes.css" />
+  <link rel="stylesheet" href="chess.css" />
 </head>
 <body>
-<header>
-  <h1>♟️ Schach</h1>
-  <nav>
-    <a href="index.html">Start</a>
-    <a href="minigames.html" aria-current="page">Mini-Games</a>
-    <a href="projects.html">Projekte</a>
-    <a href="news.html">News</a>
-    <a href="kontakt.html">Kontakt</a>
-    <a href="impressum.html">Impressum</a>
-  </nav>
-</header>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">IT Solutions</a>
+      <nav class="nav-links">
+        <a href="index.html">Start</a>
+        <a href="minigames.html" aria-current="page">Mini‑Games</a>
+        <a href="projects.html">Projekte</a>
+        <a href="news.html">News</a>
+        <a href="kontakt.html">Kontakt</a>
+        <a href="impressum.html">Impressum</a>
+      </nav>
+      <div class="header-controls">
+        <button id="themeToggle" class="theme-btn" aria-label="Theme wechseln">🌙</button>
+        <button class="nav-toggle" aria-label="Menü öffnen">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-<main>
-  <h2>Spiele gegen einen einfachen Computergegner</h2>
-  <div class="board-wrap">
-    <div id="board"></div>
-    <div class="controls">
-      <div class="status" id="status">Status: Bereit</div>
-      <div class="advantage">
-        <div class="advantage-labels"><span>Weiß</span><span>Schwarz</span></div>
-        <div class="advantage-track" aria-label="Vorteilsanzeige">
-          <div id="advantageFill" class="advantage-fill"></div>
+  <main class="site-main chess-page">
+    <section class="section">
+      <div class="section-heading">
+        <div class="section-heading-copy">
+          <h1 class="section-title">♟️ Schach</h1>
+          <p class="section-desc">Spiele gegen einen einfachen Computergegner mit besser lesbarer Oberfläche und konsistentem Layout.</p>
+        </div>
+        <div class="section-actions">
+          <a href="minigames.html" class="btn btn-ghost">← Zurück zu Mini‑Games</a>
         </div>
       </div>
-      <button id="newGameBtn">Neues Spiel</button>
-      <button id="undoBtn">Rückgängig</button>
-      <label class="status">Difficulty: Einfach (Heuristik)</label>
-      <label class="status">Bauern werden automatisch zur Dame befördert.</label>
-      <div class="captured">
-        <div><strong>Gefallene weiße Figuren:</strong> <span id="capturedWhite">—</span></div>
-        <div><strong>Gefallene schwarze Figuren:</strong> <span id="capturedBlack">—</span></div>
-      </div>
-      <div class="moves" id="moves">Züge: —</div>
+
+      <section class="content-card chess-shell">
+        <h2>Spiele gegen einen einfachen Computergegner</h2>
+        <div class="board-wrap">
+          <div id="board"></div>
+          <div class="controls">
+            <div class="status" id="status">Status: Bereit</div>
+            <div class="advantage">
+              <div class="advantage-labels"><span>Weiß</span><span>Schwarz</span></div>
+              <div class="advantage-track" aria-label="Vorteilsanzeige">
+                <div id="advantageFill" class="advantage-fill"></div>
+              </div>
+            </div>
+            <button id="newGameBtn">Neues Spiel</button>
+            <button id="undoBtn">Rückgängig</button>
+            <label class="status">Difficulty: Einfach (Heuristik)</label>
+            <label class="status">Bauern werden automatisch zur Dame befördert.</label>
+            <div class="captured">
+              <div><strong>Gefallene weiße Figuren:</strong> <span id="capturedWhite">—</span></div>
+              <div><strong>Gefallene schwarze Figuren:</strong> <span id="capturedBlack">—</span></div>
+            </div>
+            <div class="moves" id="moves">Züge: —</div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 IT Solutions</p>
+    <div>
+      <a href="minigames.html">Zurück zu Mini‑Games</a>
     </div>
-  </div>
-</main>
+  </footer>
 
-<footer>© 2026 IT Solutions · <a href="minigames.html" style="color: var(--muted);">← Zurück zu Mini-Games</a></footer>
-
-<script src="js/theme-manager.js"></script>
-<script>document.addEventListener('DOMContentLoaded', () => ThemeManager.init());</script>
-<script>
+  <script src="js/data.js"></script>
+  <script src="js/theme-manager.js"></script>
+  <script src="js/app.js"></script>
+  <script>
 const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const movesEl = document.getElementById('moves');
@@ -655,6 +687,6 @@ document.getElementById('undoBtn').addEventListener('click', ()=>{ undoMoves(2);
 refreshLegalMoves();
 renderBoard();
 updateStatus();
-</script>
+  </script>
 </body>
 </html>
